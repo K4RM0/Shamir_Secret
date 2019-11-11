@@ -16,6 +16,8 @@ public class Main {
         System.out.println("Converted String to BigInteger: "+bigIntegerStr);
         System.out.println("Converted String to BigInteger: "+bigIntegerStr);
 
+        System.out.println("Ceci est un test !");
+
 
 
     }
