@@ -111,6 +111,8 @@ public final class Shamir {
 
     private static final int CERTAINTY = 50;
 
+
+    // Execution du code en haut
     public static void main(final String[] args) {
         final Shamir shamir = new Shamir(11, 20);
 
