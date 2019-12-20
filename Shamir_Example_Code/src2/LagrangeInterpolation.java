@@ -37,7 +37,7 @@ public class LagrangeInterpolation {
 
             product = 1;    // Must set to 1
         }
-        System.out.println("The value at point " + xPoint + " is : " + sum);
+        System.out.println("The value at point  " + xPoint + " is : " + sum);
 
         // End of the Program
     }
