@@ -1,9 +1,8 @@
-import javax.crypto.SecretKeyFactory;
+import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.Security;
+import java.security.*;
 import java.security.NoSuchAlgorithmException;
 
 
