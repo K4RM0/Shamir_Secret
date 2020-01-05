@@ -1,8 +1,23 @@
-import javax.crypto.*;
+import org.bouncycastle.crypto.BufferedBlockCipher;
+import org.bouncycastle.crypto.CipherParameters;
+import org.bouncycastle.crypto.digests.SHA256Digest;
+import org.bouncycastle.crypto.engines.AESEngine;
+import org.bouncycastle.crypto.engines.RijndaelEngine;
+import org.bouncycastle.crypto.generators.PKCS12ParametersGenerator;
+import org.bouncycastle.crypto.modes.CBCBlockCipher;
+import org.bouncycastle.crypto.paddings.BlockCipherPadding;
+import org.bouncycastle.crypto.paddings.PKCS7Padding;
+import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
+import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
+import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.crypto.params.ParametersWithIV;
+
+
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
@@ -33,7 +48,7 @@ public class transfSha {
 //////////////////////   Vecteur initiale donne un aléas sur le cipher text
 // ///////////////////   et est public (voir ce qui est appellé sell dans les codes que j'ai trouvé)
 
-/*    public String decrypt1(String password, String salt, String encString) throws Exception {
+   public String decrypt1(String password, String salt, String encString) throws Exception {
 
         byte[] ivData = toByte(encString.substring(0, 32));
         byte[] encData = toByte(encString.substring(32));
@@ -53,7 +68,7 @@ public class transfSha {
         System.arraycopy(plainTemp, 0, plain, 0, plain.length);
         return new String(plain);
     }
-*/
+
     public String dec(String password, String salt, String encString)
             throws Exception {
 

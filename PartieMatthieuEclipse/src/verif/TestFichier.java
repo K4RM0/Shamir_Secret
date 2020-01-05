@@ -1,12 +1,10 @@
 package verif;
 
-public class TestFichier {
-}
-package verif;
+//public class TestFichier {
+//}
 
-        import java.io.File;
-        import java.math.BigInteger;
-        import java.util.Scanner;
+import java.io.File;
+import java.math.BigInteger;
 
 public class TestFichier extends TestChemin {
 

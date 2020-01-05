@@ -1,6 +1,6 @@
 package verif;
 
-public class FormatText {
+class FormatText {
 
     public String formatUserService(String userService)
     {

@@ -1,6 +1,4 @@
-import java.awt.*;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
@@ -13,14 +11,10 @@ public class Main {
         str = scan.nextLine();
 
         BigInteger bigIntegerStr=new BigInteger(str);
+
         System.out.println("Converted String to BigInteger: "+bigIntegerStr);
         System.out.println("Converted String to BigInteger: "+bigIntegerStr);
 
-        System.out.println("Ceci est un test !");
-
-        System.out.println ("Ceci est un autre tet !");
-
-        System.out.println("Autre test");
 
 
 

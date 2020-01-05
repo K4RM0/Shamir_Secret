@@ -1,24 +1,17 @@
 package enKdeK;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.security.spec.AlgorithmParameterSpec;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import javax.xml.bind.DatatypeConverter;
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
 import verif.TestDossier;
 import verif.TestFichier;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.math.BigInteger;
+import java.security.Security;
+import java.security.spec.AlgorithmParameterSpec;
 
 
 public class EncryptSecretText {
@@ -69,6 +62,11 @@ public class EncryptSecretText {
              * Nom du fichier == chemin + userService
              *
              */
+
+
+
+
+
             dirUtil = new TestDossier(stockClear.getAbsolutePath());
             fileName = new DfileName(userService) ;
             String path = fileName.encrypt(userService);
@@ -84,6 +82,11 @@ public class EncryptSecretText {
              * Nom du fichier == chemin + userService
              *
              */
+
+
+
+
+
             BigInteger bI = new BigInteger(buf_crypt);
             byte [] tab = bI.toByteArray();
             byte [] paramAES = cle_aes.getEncoded();

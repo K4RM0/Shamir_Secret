@@ -1,27 +1,19 @@
 package enKdeK;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import verif.TestDossier;
+import verif.TestFichier;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.math.BigInteger;
 import java.security.Security;
 import java.security.spec.AlgorithmParameterSpec;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
-import verif.TestDossier;
-import verif.TestFichier;
-
-public class DecryptSecretText {
+class DecryptSecretText {
 
     private final static File stockCrypt = new File ("D:/Cours/3eme semestre/Math/Projet/Test");
     private final static File stockClear = new File ("D:/Cours/3eme semestre/Math/Projet/TempSecr");
