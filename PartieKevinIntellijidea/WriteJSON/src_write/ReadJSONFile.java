@@ -15,7 +15,7 @@ public class ReadJSONFile {
 
         try
         {
-         Object obj = parser.parse(new FileReader("jsonExample.json"))   ;
+         Object obj = parser.parse(new FileReader("/jsonExample.json"))   ;
          JSONObject jsonObject = (JSONObject) obj ;
          String name = (String) jsonObject.get("name");
          System.out.println("Name is: " + name);

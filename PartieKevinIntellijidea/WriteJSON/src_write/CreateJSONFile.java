@@ -20,7 +20,7 @@ public class CreateJSONFile {
 
         obj.put("courses", list);
 
-        try(FileWriter file = new FileWriter("jsonExample.json"))
+        try(FileWriter file = new FileWriter("/jsonExample.json"))
         {
             file.write(obj.toString());
             file.flush();
