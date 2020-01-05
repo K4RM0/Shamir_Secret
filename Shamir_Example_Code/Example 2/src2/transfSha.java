@@ -6,7 +6,6 @@ import java.security.*;
 import java.security.NoSuchAlgorithmException;
 
 
-
 public class transfSha {
 
     public String hashPass(String pass,String sel) {
