@@ -1,8 +1,8 @@
 package Shamir;
 
-import enKdeK.DecryptSecretText;
+import enKdeK.DecryptSecret;
 import enKdeK.EncryptSecretText;
-import verif.FormatText;
+import verif.formatUserService;
 import verif.TestFichier;
 
 import java.io.File;
@@ -10,7 +10,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+class Main_TestSSSS {
 
     /**
      * @param args
@@ -24,7 +24,7 @@ public class Main {
     static ShamirSecret shamirSecret = null;
     static ShamirKey [] ShamKey = null;
     static EncryptSecretText creaSecret = null;
-    static DecryptSecretText decodSecret = null;
+    static DecryptSecret decodSecret = null;
 
 
     public static void main(String[] args) throws Exception {
@@ -57,7 +57,7 @@ public class Main {
                         + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\t");
 
                 userService = saisiStringConsole();
-                userService = new FormatText().formatUserService(userService);
+                userService = new formatUserService().formatUserService(userService);
 
                 // vérifier si le UserService est déjà utilisé
                 fileUtile = new TestFichier(stockCrypt.getPath(), userService);
@@ -105,7 +105,7 @@ public class Main {
                         + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\t");
 
                 userService = saisiStringConsole();
-                userService = new FormatText().formatUserService(userService);
+                userService = new formatUserService().formatUserService(userService);
 
                 fileUtile = new TestFichier(stockCrypt.getPath(), userService);
 
@@ -185,7 +185,7 @@ public class Main {
                         + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\t");
 
                 userSecret = saisiStringConsole();
-                userService = new FormatText().formatUserService(userService);
+                userService = new formatUserService().formatUserService(userService);
 
                 /// demande de la saisie des parts (jusqu'à ce que les utilisateurs signalent qu'ils ont saisi toutes les parts)
                 do {

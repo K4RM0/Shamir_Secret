@@ -13,7 +13,7 @@ import java.math.BigInteger;
 import java.security.Security;
 import java.security.spec.AlgorithmParameterSpec;
 
-class DecryptSecretText {
+public class DecryptSecret {
 
     private final static File stockCrypt = new File ("D:/Cours/3eme semestre/Math/Projet/Test");
     private final static File stockClear = new File ("D:/Cours/3eme semestre/Math/Projet/TempSecr");
