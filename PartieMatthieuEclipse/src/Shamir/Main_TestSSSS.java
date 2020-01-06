@@ -54,7 +54,7 @@ class Main_TestSSSS {
                 /// demande UserService
 
                 System.out.println("Saisir le nom du service de destination du mot de passe \t"
-                        + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\t");
+                        + "(Ne pas mettre de caractère spéciaux en fin de ligne,  SVP.\t");
 
                 userService = saisiStringConsole();
                 userService = new formatUserService().formatUserService(userService);
