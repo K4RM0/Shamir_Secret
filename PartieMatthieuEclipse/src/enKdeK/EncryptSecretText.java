@@ -16,8 +16,8 @@ import java.security.spec.AlgorithmParameterSpec;
 
 public class EncryptSecretText {
 
-    private final static File stockCrypt = new File ("D:/Cours/3eme semestre/Math/Projet/Test");
-    private final static File stockClear = new File ("D:/Cours/3eme semestre/Math/Projet/TempSecr");
+    final static File stockCrypt = new File ("/Stockage_Secret_non_crypt");
+    final static File stockClear = new File ("/Stockage_Secret__crypt");
     private GenAESkey aesKey = null;
     private TestFichier fileUtil = null ;
     private TestDossier dirUtil = null ;

@@ -5,9 +5,6 @@ import java.util.Scanner;
 
 public class TestDossier extends TestChemin {
 
-    private final static File stockCrypt = new File ("D:/Cours/3eme semestre/Math/Projet/Test");
-    private final static File stockClear = new File ("D:/Cours/3eme semestre/Math/Projet/TempSecr");
-    private final static String stockCryptName = stockCrypt.getAbsolutePath();
 
     /**
      * Test si dossier existe

@@ -14,8 +14,6 @@ public class TestFichier extends TestChemin {
      * Entrée : nom fichier
      *
      */
-    private final static File stockCrypt = new File ("D:/Cours/3eme semestre/Math/Projet/Test");
-    private final static String stockCryptName = stockCrypt.getAbsolutePath();
     private TestDossier dossier = null ;
     private String fileName ;
     private String dirPath  ;

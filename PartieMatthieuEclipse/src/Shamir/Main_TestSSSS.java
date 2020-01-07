@@ -15,8 +15,8 @@ class Main_TestSSSS {
     /**
      * @param args
      */
-    final static File stockCrypt = new File ("D:/Cours/3eme semestre/Math/Projet/Test");
-    final static File stockClear = new File ("D:/Cours/3eme semestre/Math/Projet/TempSecr");
+    final static File stockCrypt = new File ("/Stockage_Secret_non_crypt");
+    final static File stockClear = new File ("/Stockage_Secret__crypt");
     final static int n = 9; //number of generate shares
     final static int t = 5; //number of shares for solve the secret (t <= n)
     final static int numBits = 256; //number of bits of p  (à coisir entre 128 et 256)
@@ -136,7 +136,7 @@ class Main_TestSSSS {
                     // (vérifier que le nombre de part est supérieur à 2          ??????????????????   )
                     while (nbrSharedKey < 2 && cpt<=5)
                     {
-                        System.out.println("Saisir le nombre de part minimu pour reconstruir le secret (minimum 2 parts) : \t");
+                        System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \t");
 
                         nbrKeyUtil = saisiIntConsole();
                         cpt++;
@@ -151,7 +151,7 @@ class Main_TestSSSS {
                     do
                     {
 
-                        System.out.println("Saisir le nombre de partage du secret à créer (minimum 2 parts) : \t");
+                        System.out.println("Saisir le nombre de partage du secret à créer (au minimum égal nombre de part pour reconstruire le secret) : \t");
 
                         nbrSharedKey = saisiIntConsole();
 
