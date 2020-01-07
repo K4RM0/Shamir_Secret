@@ -141,11 +141,12 @@ class Main_TestSSSS {
                     nbrSharedKey = saisiIntConsole();
 
                     // (vérifier que le nombre de part est supérieur à 2          ??????????????????   )
-                    while (nbrSharedKey < 2 && cpt<=5)
+                    while (nbrKeyUtil < 2 && cpt<=3)
                     {
                         System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \n");
 
                         nbrKeyUtil = saisiIntConsole();
+                        System.out.println(nbrKeyUtil + " 3332222");
                         cpt++;
                     }
 
@@ -168,6 +169,9 @@ class Main_TestSSSS {
                     secretBigI = fileUtile.getAesBigI();
                     System.out.println(secretBigI);
                     shamirSecret = new ShamirSecret();
+                    System.out.println(nbrKeyUtil + " 2222");
+                    System.out.println(nbrSharedKey + " 3332222");
+
                     ShamKey = shamirSecret.generateKeys(nbrKeyUtil, nbrSharedKey, numBits, secretBigI);
 
 // l'affichage à la console est fait depuis la méthode appelée
@@ -189,8 +193,8 @@ class Main_TestSSSS {
                 int cptKey = 0;
 
                 /// demande UserService
-                System.out.println("Saisir le nom du service à accéder\t"
-                        + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\t");
+                System.out.println("Saisir le nom du service à accéder\n"
+                        + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
 
                 userSecret = saisiStringConsole();
                 userService = new formatUserService().formatUserService(userService);

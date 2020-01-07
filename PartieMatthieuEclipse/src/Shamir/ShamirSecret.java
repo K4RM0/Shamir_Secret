@@ -191,7 +191,10 @@ public class ShamirSecret {
         BigInteger prime = BigInteger.probablePrime(numBits, new Random());
 
         BigInteger fx, x;
+        System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+        System.out.println(n);
         for(int i = 1; i <= n; i++){
+            System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
             do{
                 x = new BigInteger(numBits, new Random());
             }while(isRepeat(x, keys));
