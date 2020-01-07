@@ -8,5 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bcprov-jdk12-164" level="project" />
+    <orderEntry type="library" name="bcprov-jdk15to18-164" level="project" />
+    <orderEntry type="library" name="spring-security-crypto-5.2.1.RELEASE" level="project" />
   </component>
 </module>

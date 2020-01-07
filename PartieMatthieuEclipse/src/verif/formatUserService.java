@@ -7,6 +7,7 @@ public class formatUserService {
         String format = userService.toLowerCase();
         char [] ltr = format.toCharArray();
         int cpt=0;
+        userService="";
 
         for (int i=cpt ; i<format.length(); i++){
             while (ltr[i] == ' ' || ltr[i] =='_' || ltr[i] =='-' || ltr[i]  == '\\' || ltr[i]  == '/')
@@ -15,10 +16,9 @@ public class formatUserService {
                 ltr[i] = ltr[cpt];
                 i=cpt;
             }
-            System.out.print(ltr[i]);
+            userService +=ltr[i];
         }
-
-        return ltr.toString();
+        return userService;
     }
 
 }

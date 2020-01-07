@@ -185,8 +185,8 @@ public class ShamirSecret {
         ShamirKey[] keys = new ShamirKey[n];
         if(s[0].bitLength() >= numBits)
             throw new ExceptionShamirSecret("Nombre de bits trop petit");
-        if(t > n)
-            throw new ExceptionShamirSecret("Nombre de parts nécessaires trop grand par rapport au nombre de part utiles");
+        if(n > t)
+            throw new ExceptionShamirSecret("Il faut plus de parts à partager, SVP.");
 
         BigInteger prime = BigInteger.probablePrime(numBits, new Random());
 

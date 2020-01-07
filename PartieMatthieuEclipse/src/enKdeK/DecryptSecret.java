@@ -9,21 +9,21 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.Security;
 import java.security.spec.AlgorithmParameterSpec;
 
 public class DecryptSecret {
 
-    final static File stockCrypt = new File ("/Stockage_Secret_non_crypt");
-    final static File stockClear = new File ("/Stockage_Secret__crypt");
+    final static File stockCrypt = new File ("PartieMatthieuEclipse/stockageSecretCrypt");
+    final static File stockClear = new File ("PartieMatthieuEclipse/stockageSecretNonCrypt");
     private GenAESkey aesKey = null;
     private TestFichier fileUtil = null ;
     private TestDossier DirUtil = null ;
     private DfileName fileName = null;
 
-    public void decrypt_sym(BigInteger bigInt )
-    {
+    public void decrypt_sym(BigInteger bigInt ) throws IOException {
 
         fileUtil = new TestFichier(stockCrypt.getPath());
         String userService = 		fileUtil.getUserService();

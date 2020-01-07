@@ -74,8 +74,10 @@ public class TestFichier extends TestChemin {
                 if (testName.equals(fileName)) {
                     this.prospectFile = item ;
                     this.userService = testName;
-                    this.aesBigI = new BigInteger("-"+item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
+                    this.aesBigI = new BigInteger(/*"-"+*/item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
                     this.aesKey = Integer.parseInt(item.getPath().substring(item.getPath().lastIndexOf("-")+1, item.getPath().length() ));
+                    System.out.println(aesBigI.toString());
+
                 }
                 else
                 {
@@ -101,10 +103,9 @@ public class TestFichier extends TestChemin {
             {
 //				testName = item.getPath().substring(item.getPath().lastIndexOf("\\")+1,item.getPath().indexOf("_") );
                 testBigI = item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") );
-
                 if (testBigI.equals(bigInt)) {
                     this.prospectFile = item ;
-                    this.aesBigI = new BigInteger("-"+item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
+                    this.aesBigI = new BigInteger(/*"-"+*/item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
                     this.userService = item.getPath().substring(item.getPath().indexOf("_")+1,item.getPath().lastIndexOf("-") );
 
                 }
@@ -138,13 +139,13 @@ public class TestFichier extends TestChemin {
                 testName = item.getPath().substring(item.getPath().indexOf("_")+1,item.getPath().lastIndexOf("-") );
 
                 if (testName.equals(fileName)) {
-                    System.out.println("Le secret pour " + fileName + " est déjà créé.");
-                    return false;
+                    testFile();
+                    return true;
                 }
             }
         }
 
-        return true ;
+        return false ;
     }
 
     /**

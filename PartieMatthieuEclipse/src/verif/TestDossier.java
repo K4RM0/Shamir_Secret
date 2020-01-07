@@ -18,7 +18,7 @@ public class TestDossier extends TestChemin {
     public TestDossier (String path)
     {
         super(path);
-        creaDir();
+        testDir();
 
     }
 
@@ -31,32 +31,26 @@ public class TestDossier extends TestChemin {
     {
         if (!file.isDirectory())
         {
-            return false ;
+            creaDir();
         }
 
         return true;
-
     }
 
-    private void creaDir ()
+    private boolean creaDir ()
     {
         String newDirectory = null ;
-
-        if(!testDir())
-        {
-            while(!testDir()) {
-                System.out.println("Le dossier référent n'exitse pas. \t"
-                        + "Voulez-vous en créer un ? (Oui, Non)");
-                Scanner scan = new Scanner(System.in);
-                newDirectory = scan.next();
-                if(newDirectory.toLowerCase() == "oui")
-                {
-                    file.mkdirs();
-                }
-                else
-                    return;
-            }
+        System.out.println("Le dossier référent n'exitse pas. \t"
+                + "Voulez-vous en créer un ? (Oui, Non)");
+        Scanner scan = new Scanner(System.in);
+        newDirectory = scan.nextLine();
+        if(newDirectory.toLowerCase() == "oui") {
+            file.mkdirs();
+            return true;
         }
+        else
+            return false;
+
     }
 
     public boolean emptyDir ()
@@ -67,9 +61,9 @@ public class TestDossier extends TestChemin {
         {
             if (fList.length == 0){
                 System.out.println("Liste vide");
-                return false ;
+                return true ;
             }
         }
-        return true;
+        return false;
     }
 }

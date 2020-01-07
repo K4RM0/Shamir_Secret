@@ -16,8 +16,8 @@ import java.security.spec.AlgorithmParameterSpec;
 
 public class EncryptSecretText {
 
-    final static File stockCrypt = new File ("/Stockage_Secret_non_crypt");
-    final static File stockClear = new File ("/Stockage_Secret__crypt");
+    final static File stockCrypt = new File ("PartieMatthieuEclipse/stockageSecretCrypt");
+    final static File stockClear = new File ("PartieMatthieuEclipse/stockageSecretNonCrypt");
     private GenAESkey aesKey = null;
     private TestFichier fileUtil = null ;
     private TestDossier dirUtil = null ;
@@ -42,7 +42,6 @@ public class EncryptSecretText {
             // ajout  du provider BC
             Security.addProvider(new BouncyCastleProvider());
 
-
             // Chiffrement de la chaine
             Cipher c = Cipher.getInstance("AES/CBC/PKCS7PADDING","BC");
             c.init(Cipher.ENCRYPT_MODE, cle_aes, salt);
@@ -62,11 +61,6 @@ public class EncryptSecretText {
              * Nom du fichier == chemin + userService
              *
              */
-
-
-
-
-
             dirUtil = new TestDossier(stockClear.getAbsolutePath());
             fileName = new DfileName(userService) ;
             String path = fileName.encrypt(userService);
@@ -76,17 +70,12 @@ public class EncryptSecretText {
             fos.close();
 
 
-            // sauvegarde secret text crypté dans un fichier
+            // sauvevfgarde secret text crypté dans un fichier
             /**
              * sauvegarde secret text non crypté dans un fichier dont le nom est crypté
              * Nom du fichier == chemin + userService
              *
              */
-
-
-
-
-
             BigInteger bI = new BigInteger(buf_crypt);
             byte [] tab = bI.toByteArray();
             byte [] paramAES = cle_aes.getEncoded();
@@ -99,7 +88,6 @@ public class EncryptSecretText {
             envfos.close();
 
             System.out.println("YYYY : " +stockCrypt.getAbsolutePath() + "/" + aesBI + "_" + userService + "-" + key_length);
-            System.out.println("YYYYYYYYYYYY buf_crypt2 : " + new String(buf_crypt));
 
 
         } catch (Exception e) {

@@ -2,8 +2,8 @@ package Shamir;
 
 import enKdeK.DecryptSecret;
 import enKdeK.EncryptSecretText;
-import verif.formatUserService;
 import verif.TestFichier;
+import verif.formatUserService;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -15,10 +15,10 @@ class Main_TestSSSS {
     /**
      * @param args
      */
-    final static File stockCrypt = new File ("/Stockage_Secret_non_crypt");
-    final static File stockClear = new File ("/Stockage_Secret__crypt");
-    final static int n = 9; //number of generate shares
-    final static int t = 5; //number of shares for solve the secret (t <= n)
+    final static File stockCrypt = new File ("PartieMatthieuEclipse/stockageSecretCrypt");
+    final static File stockClear = new File ("PartieMatthieuEclipse/stockageSecretNonCrypt");
+//    final static int n = 9; //number of generate shares
+//    final static int t = 5; //number of shares for solve the secret (t <= n)
     final static int numBits = 256; //number of bits of p  (à coisir entre 128 et 256)
     static TestFichier fileUtile = null ;
     static ShamirSecret shamirSecret = null;
@@ -29,7 +29,11 @@ class Main_TestSSSS {
 
     public static void main(String[] args) throws Exception {
 
-        String newDirectory = "";
+ //       System.out.print(stockCrypt.getAbsolutePath());
+
+        System.out.print(stockCrypt.getAbsolutePath());
+
+        int newDirectory = 0;
         // // // demande si création secret ou si création nouvelles parts du secret ou si révélation secret
         do {
             String userService = "";
@@ -37,34 +41,33 @@ class Main_TestSSSS {
             String secret = "";
             String part2Secret = "";
 
-            System.out.println("Bonjour, Que voulez-vous faire ? (Saisr le chiffre correspondant) \t"
-                    + "(1) créer un secret \t"
-                    + "(1) créer des parts de secret \t"
-                    + "(3) révéler un secret \t"
-                    + "(4) ne rien faire\t");
+            System.out.println("Bonjour, Que voulez-vous faire ? (Saisir le chiffre correspondant) \n"
+                    + "(1) créer un secret \n"
+                    + "(2) créer des parts de secret \n"
+                    + "(3) révéler un secret \n"
+                    + "(4) ne rien faire\n");
 
-            Scanner scan = new Scanner(System.in);
-            newDirectory = scan.next();
-            scan = null ;
+            newDirectory = saisiIntConsole ();
 
             // // Si création secret
-            if(newDirectory == "1")
+            if(newDirectory == 1)
             {
 
                 /// demande UserService
 
-                System.out.println("Saisir le nom du service de destination du mot de passe \t"
-                        + "(Ne pas mettre de caractère spéciaux en fin de ligne,  SVP.\t");
+                System.out.println("Saisir le nom du service de destination du mot de passe \n"
+                        + "(Ne pas mettre de caractère spéciaux en fin de ligne,  SVP.\n");
 
                 userService = saisiStringConsole();
+
                 userService = new formatUserService().formatUserService(userService);
 
                 // vérifier si le UserService est déjà utilisé
-                fileUtile = new TestFichier(stockCrypt.getPath(), userService);
+                fileUtile = new TestFichier(stockCrypt.getAbsolutePath(), userService);
                 if(fileUtile.validFile())
                 {
                     /// demande nombre de bits (128 ou 256(defaut))
-                    System.out.println("Saisir le nombre de bits d'encodage (128 ou 256) : \t");
+                    System.out.println("Saisir le nombre de bits d'encodage (128 ou 256) : \n");
 
                     int nbrBitsTemp = saisiIntConsole();
 
@@ -74,25 +77,26 @@ class Main_TestSSSS {
 
                     /// demande de la saisie du secret (mini un caractère)
                     do {
-                        System.out.println("Saisir la phase ou le mot secret que vous souhaitez\t");
+                        System.out.println("Saisir la phase ou le mot secret que vous souhaitez\n");
 
                         secret = saisiStringConsole();
 
-                    }while(secret.length()>0);
+                    }while(secret.length()<0);
                     // vérifier que l'utilisateur a bien saisi au moins 1 caractère
 
                     // // // encodage du secret
                     creaSecret = new EncryptSecretText();
                     creaSecret.chiffrement_sym(userService, nbrBits, secret);
-                    newDirectory = "4";
+                    newDirectory = 4;
                 }
                 else
                 {
-                    newDirectory = "4";
+                    System.out.println("Ce service a déjà un secret. Veuillez contacter votre responsable informatique.");
+                    newDirectory = 4;
                 }
             }
             // // création de parts d'un secret
-            if (newDirectory == "2")
+            if (newDirectory == 2)
             {
                 int cpt =0;
                 BigInteger secretBigI ;
@@ -101,26 +105,29 @@ class Main_TestSSSS {
                 int numBits = 192; // valeur par défaut
 
                 /// demande du UserService
-                System.out.println("Saisir le nom du service de destination \t"
-                        + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\t");
+                System.out.println("Saisir le nom du service de destination \n"
+                        + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
 
                 userService = saisiStringConsole();
                 userService = new formatUserService().formatUserService(userService);
 
                 fileUtile = new TestFichier(stockCrypt.getPath(), userService);
-
                 while(!fileUtile.validFile() && cpt<=3 )
                 {
-                    System.out.println("Erreur dans la saisie du nom du service de destination  \t"
-                            + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\t");
+                    System.out.println("Erreur dans la saisie du nom du service de destination  \n"
+                            + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
 
                     secret = saisiStringConsole();
                     cpt++;
                 }
                 if(fileUtile.validFile())
                 {
+                    System.out.println(fileUtile.getAesBigI().toString());
+                    System.out.println(fileUtile.takeFile().getPath());
+                    System.out.println(fileUtile.getAes());
+
                     /// demande du nombre de bits de cryptage (128, 192 ou 256)
-                    System.out.println("Saisir le nombre de bits d'encodage (128, 192 ou 256) : \t");
+                    System.out.println("Saisir le nombre de bits d'encodage (128, 192 ou 256) : \n");
 
                     int numBitsTemp = saisiIntConsole();
 
@@ -129,14 +136,14 @@ class Main_TestSSSS {
                         numBits=numBitsTemp;
 
                     /// demande du nombre de parts du secret à créer
-                    System.out.println("Saisir le nombre de part de secret à créer (minimum 2 parts) : \t");
+                    System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \n");
 
                     nbrSharedKey = saisiIntConsole();
 
                     // (vérifier que le nombre de part est supérieur à 2          ??????????????????   )
                     while (nbrSharedKey < 2 && cpt<=5)
                     {
-                        System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \t");
+                        System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \n");
 
                         nbrKeyUtil = saisiIntConsole();
                         cpt++;
@@ -155,24 +162,25 @@ class Main_TestSSSS {
 
                         nbrSharedKey = saisiIntConsole();
 
-                    }while (nbrKeyUtil <= nbrSharedKey);
+                    }while (nbrKeyUtil >= nbrSharedKey);
 
                     // // // création des parts de secret
                     secretBigI = fileUtile.getAesBigI();
+                    System.out.println(secretBigI);
                     shamirSecret = new ShamirSecret();
                     ShamKey = shamirSecret.generateKeys(nbrKeyUtil, nbrSharedKey, numBits, secretBigI);
 
 // l'affichage à la console est fait depuis la méthode appelée
 
-                    newDirectory = "4";
+                    newDirectory = 4;
                 }
                 else
                 {
-                    newDirectory = "4";
+                    newDirectory = 4;
                 }
             }
             // // si révélation du secret
-            if (newDirectory == "3")
+            if (newDirectory == 3)
             {
                 String userSecret ="";
                 ArrayList <BigInteger> keys = null;
@@ -262,11 +270,11 @@ class Main_TestSSSS {
 				 */
 
 
-                newDirectory = "4";
+                newDirectory = 4;
             }
-            if (newDirectory == "4")
+            newDirectory = 4;
                 return;
-        }while(newDirectory != "1" && newDirectory != "2" && newDirectory != "3" );
+        }while(newDirectory != 1 && newDirectory != 2 && newDirectory != 3 );
 
 
     }
@@ -274,8 +282,8 @@ class Main_TestSSSS {
     static String saisiStringConsole ()
     {
         Scanner scan = new Scanner(System.in);
-        String get  = scan.next();
-        scan = null ;
+        String get  = scan.nextLine();
+     //   scan = null ;
 
         return get;
     }
@@ -284,7 +292,7 @@ class Main_TestSSSS {
     {
         Scanner scan = new Scanner(System.in);
         int get = scan.nextInt();
-        scan = null ;
+     //   scan = null ;
 
         return get;
     }
