@@ -1,13 +1,12 @@
 package enKdeK;
 
-import java.io.File;
-import java.security.SecureRandom;
-import java.security.Security;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import verif.TestDossier;
 import verif.TestFichier;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.security.Security;
 
 
 public class GenAESkey {
@@ -19,7 +18,7 @@ public class GenAESkey {
     private int key_length = 0;
 
     /**
-     * Objet pour créer le secret
+     * Création d'une clef AES spécifique au UserService pour créer le secret
      * @param password
      * @param key_len
      */
@@ -28,16 +27,12 @@ public class GenAESkey {
         this.key_length = key_len;
     }
 
-    /**
-     * Objet pour récupérer le secret
-     * @param password
-     */
     public GenAESkey (String password) {
         this.pwd = password;
     }
 
     /**
-     * Obtention de la clef AES générée en privée
+     * Obtention de la clef AES générée dans cette classe en privée
      * @return
      */
     public SecretKey clef(int key_len)
@@ -45,26 +40,6 @@ public class GenAESkey {
         return genererCleAES(key_len);
     }
 
-    /**
-     * Récupération de la clef AES pour le décryptage
-     * @return
-     */
-/*	public SecretKey getKey(String filePath)
-	{
-		workFile = new TestFichier(filePath, pwd);
-*/
-    /**
-     * Fichiers dans le dossier de stockage des clefs cryptées
-     *
-     */
-/*		File file = workFile.takeFile();
-		String getName = file.getPath();
-		String forKey = getName.substring(getName.indexOf(pwd+"_")) ;
-		this.key_length =Integer.parseInt(forKey);
-
-		return clef();
-	}
-*/
 
     /**
      * Génération de la clef AES PRIVATE
@@ -101,23 +76,5 @@ public class GenAESkey {
             return null;
         }
     }
-
-    /**
-     * Permettra d'afficher en String l'élément crypté
-     * (hexadécimal en String)
-     * @param hexaToString
-     * @return
-     */
-    private String  byteHexaToString (byte [] hexaToString) {
-        String result = "" ;
-        for(int i = 0; i < hexaToString.length; i=i+2) {
-            String st = ""+hexaToString[i]+""+hexaToString[i+1];
-//	         char ch = (char)Integer.parseInt(st, 16);
-            result = result + st;
-        }
-
-        return result;
-    }
-
 
 }

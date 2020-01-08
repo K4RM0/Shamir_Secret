@@ -147,7 +147,6 @@ class Main_TestSSSS {
                         System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \n");
 
                         nbrKeyUtil = saisiIntConsole();
-                        System.out.println(nbrKeyUtil + " 3332222");
                         cpt++;
                     }
 
@@ -160,7 +159,7 @@ class Main_TestSSSS {
                     do
                     {
 
-                        System.out.println("Saisir le nombre de partage du secret à créer (au minimum égal nombre de part pour reconstruire le secret) : \t");
+                        System.out.println("Saisir le nombre de partage du secret à créer (au minimum égal nombre de part pour reconstruire le secret) : \n");
 
                         nbrSharedKey = saisiIntConsole();
 
@@ -168,10 +167,8 @@ class Main_TestSSSS {
 
                     // // // création des parts de secret
                     secretBigI = fileUtile.getAesBigI();
-                    System.out.println(secretBigI);
+
                     shamirSecret = new ShamirSecret();
-                    System.out.println(nbrKeyUtil + " 2222");
-                    System.out.println(nbrSharedKey + " 3332222");
 
                     ShamKey = shamirSecret.generateKeys(nbrKeyUtil, nbrSharedKey, numBits, secretBigI);
 
@@ -187,6 +184,9 @@ class Main_TestSSSS {
             // // si révélation du secret
             if (newDirectory == 3)
             {
+                ///// Cette partie est à adapter avec le code Json
+                // car il faudrait peut-être vérifier à chaque saisie
+                // (surtout si on ne donne qu'une valeur hexadécimal à la place du BigInteger x et qu'on ne demande pas le F(x) )
                 String userSecret ="";
                 ArrayList <BigInteger> keys = null;
                 String tempX = "0";

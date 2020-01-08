@@ -26,7 +26,7 @@ public class DecryptSecret {
     public void decrypt_sym(BigInteger bigInt ) throws IOException {
 
         fileUtil = new TestFichier(stockCrypt.getPath());
-        String userService = 		fileUtil.getUserService();
+        String userService = fileUtil.getUserService();
         int key_length = fileUtil.getAes();
         System.out.println("getAesKey : " + key_length);
         aesKey = new GenAESkey(userService);
@@ -50,12 +50,7 @@ public class DecryptSecret {
             FileInputStream fis = new FileInputStream(file);
             byte [] buf_crypt2 = new byte [(int) file.length()];
             fis.read(buf_crypt2);
-            System.out.println(fis.toString());
 
-            System.out.println("YYYYYYYYYYYY buf_crypt2 : " + new String(buf_crypt2));
-
-
-//	System.out.println(buf_crypt2.toString() );
             fis.close();
 
 //Déchiffrement de le chaine
@@ -72,13 +67,8 @@ public class DecryptSecret {
             System.out.println( "Decrypté : " + buf_decrypt.toString());
             System.out.println( "Decrypté : " +decrypted);
 
-    /*	    char[] sortie= new char[(int)buf_decrypt.length];
-	    DataInputStream instream=null;
-	      System.out.println( "Decrypté : " + decrypted);
-	      System.out.println(buf_decrypt.toString());
-*/
             ///////////////////////
-/*	// sauvegarde ds un fichier uniquement pour vérifier mais sans intérêt (il me semble)
+/*	// sauvegarde ds un fichier uniquement pour vérifier mais sans intérêt (il me semble)   >>>>>>  pour test ?????
 	envfos = new FileOutputStream("D:\\Cours\\3eme semestre\\Math\\Projet\\TEst\\fichier_dechiffre");
 	envfos.write(buf_decrypt);
 	envfos.close();
@@ -92,7 +82,6 @@ public class DecryptSecret {
         String result = "" ;
         for(int i = 0; i < hexaToString.length; i=i+2) {
             String st = ""+hexaToString[i]+""+hexaToString[i+1];
-//	         char ch = (char)Integer.parseInt(st, 16);
             result = result + st;
         }
 
