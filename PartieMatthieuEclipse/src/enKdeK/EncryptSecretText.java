@@ -49,9 +49,6 @@ public class EncryptSecretText {
             byte[] buf_crypt = c.doFinal(entree.getBytes("UTF-8"));
             byte[] buf_cryptClear = c.doFinal(clearData);
 
-            System.out.println("+++++++++++++++++++++++++++++++++ resultat"+buf_crypt.toString());
-            System.out.println("+++++++++++++++++++++++++++++++++ resultat"+ byteHexaToString(buf_crypt));
-
 // permet d'afficher l'élément crypté en string pour être sur que le cryptage est réussi
 //	      System.out.println( byteHexaToString (buf_crypt) );
 
