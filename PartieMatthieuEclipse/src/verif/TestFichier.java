@@ -136,8 +136,7 @@ public class TestFichier extends TestChemin {
         {
             for (File item : fList)
             {
-                testName = item.getPath().substring(item.getPath().indexOf("_")+1,item.getPath().lastIndexOf("-") );
-
+                testName = item.getPath().substring(item.getPath().lastIndexOf("_")+1,item.getPath().lastIndexOf("-") );
                 if (testName.equals(fileName)) {
                     testFile();
                     return true;

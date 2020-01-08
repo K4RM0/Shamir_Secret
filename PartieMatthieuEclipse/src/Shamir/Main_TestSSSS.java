@@ -61,10 +61,10 @@ class Main_TestSSSS {
                 userService = saisiStringConsole();
 
                 userService = new formatUserService().formatUserService(userService);
-
                 // vérifier si le UserService est déjà utilisé
                 fileUtile = new TestFichier(stockCrypt.getAbsolutePath(), userService);
-                if(fileUtile.validFile())
+
+                if(!fileUtile.validFile())
                 {
                     /// demande nombre de bits (128 ou 256(defaut))
                     System.out.println("Saisir le nombre de bits d'encodage (128 ou 256) : \n");
