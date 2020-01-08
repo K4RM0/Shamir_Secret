@@ -199,11 +199,18 @@ public class ShamirSecret {
             fx = calculatePolynomial(s, x, prime);
             keys[i-1] = new ShamirKey();
             keys[i-1].setP(prime);
-            keys[i-1].setX(x);        /// part à donner
-            keys[i-1].setF(fx);		  /// part à donner
+            keys[i-1].setX(x);        /// part à "donner"
+            keys[i-1].setF(fx);		  /// part à donner (?)
+
+            keys[i-1].getX();        // récup de la valeur pour tout x (même celle de Keys[0])
+            keys[i-1].getF();        // récup de la valeur pour tout fx (même celle de Keys[0])
+
             System.out.println(i+"-> f("+x+") = " +keys[i-1].getF());
         }
         this.shamKey = keys ;
+
+        keys[0].getP();        // récup de la valeur du Prime
+
 
         return keys;
     }

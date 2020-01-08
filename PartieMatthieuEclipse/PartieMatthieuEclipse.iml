@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/stockageSecretCrypt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/stockageSecretNonCrypt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/JARs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Test" type="java-test-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
