@@ -32,7 +32,7 @@ class Main_TestSSSS {
 
  //       System.out.print(stockCrypt.getAbsolutePath());
 
-        System.out.print(stockCrypt.getAbsolutePath());
+        System.out.print(stockCrypt.getAbsolutePath( ));
 
         int newDirectory = 0;
         // // // demande si création secret ou si création nouvelles parts du secret ou si révélation secret
