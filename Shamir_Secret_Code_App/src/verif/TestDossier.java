@@ -31,7 +31,7 @@ public class TestDossier extends TestChemin {
     {
         if (!file.isDirectory())
         {
-            creaDir();
+            creaDir() ;
         }
 
         return true;

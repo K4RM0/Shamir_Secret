@@ -5,6 +5,6 @@ package Shamir;
  */
 public class ExceptionShamirSecret extends Exception {
     public ExceptionShamirSecret(String msg) {
-        super(msg);
+        super(msg) ;
     }
 }

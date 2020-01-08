@@ -7,7 +7,7 @@ public class formatUserService {
         String format = userService.toLowerCase();
         char [] ltr = format.toCharArray();
         int cpt=0;
-        userService="";
+        userService="" ;
 
         for (int i=cpt ; i<format.length(); i++){
             while (ltr[i] == ' ' || ltr[i] =='_' || ltr[i] =='-' || ltr[i]  == '\\' || ltr[i]  == '/')

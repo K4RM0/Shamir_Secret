@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 class Main_TestSSSS {
 
     /**
@@ -56,7 +57,7 @@ class Main_TestSSSS {
                 /// demande UserService
 
                 System.out.println("Saisir le nom du service de destination du mot de passe \n"
-                        + "(Ne pas mettre de caractère spéciaux en fin de ligne,  SVP.\n");
+                        + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
 
                 userService = saisiStringConsole();
 
@@ -100,7 +101,7 @@ class Main_TestSSSS {
             {
                 int cpt =0;
                 BigInteger secretBigI ;
-                int nbrSharedKey =0;
+                int nbrSharedKey;
                 int nbrKeyUtil = 0;
                 int numBits = 192; // valeur par défaut
 
@@ -217,16 +218,10 @@ class Main_TestSSSS {
                 if(keys.isEmpty())
                     return;
 
-				/*
-				 Rechercher :
+                //récupération du prime depuis la méthode creaShamirKeys dans ShamirSecret.java
 
-				 shamirKey [] en rapport avec le userService
-				*/
-				/*
-
-				récupérer :
-
-				 prime généré dans la méthode
+                /*
+                 prime généré dans la méthode
 				 ShamirKey[] generateKeys(int n, int t, int numBits, BigInteger secretBI)
 				 de la classe shamirSecret
 
@@ -237,24 +232,14 @@ class Main_TestSSSS {
 
 				 Puis :
 				 //RESOLUTION SHAMIR, calculate parameter 0 (secret)
-		byte[] des = ShamirSecret.calculateLagrange(sk2);
+		        byte[] des = ShamirSecret.calculateLagrange(sk2);
 
-		BigInteger secretFound = new BigInteger(des);
-		System.out.println("Secret = " + secretFound);
+		        BigInteger secretFound = new BigInteger(des);
+		        System.out.println("Secret = " + secretFound);
+                 */
 
-		!!!!!!!!!!!!!!!!!!! Attention, je n'ai pas implémenter de test boolean
-		pour dire si le secret est bien rerconstruit ou non
-		Je sais seulement que la reconstruction fonctionne
-
-				 (A vous les gars !!!!!!!!!!!!)
-				Et si il faut que je fasse la partie test boolean dont je viens de parler, il n'y a pas de problème.
-
-
-				 */
-
-                /// reconstruction secret
-
-				/*
+                //reconstruction du secret
+                /*
 				 A partir d'ici,
 				 quand on a le BigInteger généré (reconstruit) juste avant, il suffit de  vérifier s'il existe un fichier qui le contient
 
@@ -272,6 +257,7 @@ class Main_TestSSSS {
 				 decodSecret.decrypt_sym(BigIntegerREconstruit)
 
 				 */
+
 
 
                 newDirectory = 4;

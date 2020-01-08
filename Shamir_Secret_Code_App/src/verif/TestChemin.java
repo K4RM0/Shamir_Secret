@@ -5,7 +5,7 @@ import java.io.File;
 public class TestChemin {
 
     private String chemin ;
-    protected File file = null;
+    protected File file = null ;
 
     public TestChemin (String chemin)
     {

@@ -1,9 +1,14 @@
 package Shamir;
 
 
+import org.json.JSONObject;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
+
 
 /**
  * <p> Calculate Shamir scheme. You need t shares of n for resolve the secret </p>
@@ -20,7 +25,7 @@ public class ShamirSecret {
 
     /**
      * Créer le partage du secret --- Create a share using Shamir's scheme
-     * @param x Morceau partagé  ---  Shamir's shares
+     * @param x Morceau partagé  ---  Shamir's  shares
      * @param k tableau des clefs du secret  ---  array of shamirKeys
      * @return vrai si  x est une clef shamir    ---   true is x is in k
      *
@@ -205,11 +210,37 @@ public class ShamirSecret {
             keys[i-1].getX();        // récup de la valeur pour tout x (même celle de Keys[0])
             keys[i-1].getF();        // récup de la valeur pour tout fx (même celle de Keys[0])
 
+
+
+            // fichier JSON avec un tableau pour contenir les valuers de x et de fx (qui permettent de gèrer les clès)
+
+                JSONObject objet = new JSONObject();
+                String xconvert = x.toString();
+                String fxconvert = fx.toString();
+
+                objet.put(xconvert, fxconvert);
+
+
+
+            try(FileWriter file = new FileWriter("fxandxtab.json"))
+            {
+                file.write(objet.toString());
+                file.flush();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+
+
             System.out.println(i+"-> f("+x+") = " +keys[i-1].getF());
         }
         this.shamKey = keys ;
 
         keys[0].getP();        // récup de la valeur du Prime
+
+        //JSON fichier 1 tableau 1
+
 
 
         return keys;
