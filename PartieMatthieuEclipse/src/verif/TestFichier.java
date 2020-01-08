@@ -6,14 +6,13 @@ package verif;
 import java.io.File;
 import java.math.BigInteger;
 
+/**
+ * Classe héritant de TestChemin
+ * Teste le fichier considéré (userService ou BigInteger)
+ * et récupére certaine données au passage
+ */
 public class TestFichier extends TestChemin {
 
-    /**
-     * Test si fichier existe
-     *
-     * Entrée : nom fichier
-     *
-     */
     private TestDossier dossier = null ;
     private String fileName ;
     private String dirPath  ;
@@ -53,6 +52,7 @@ public class TestFichier extends TestChemin {
     /**
      * Test si le dossier contient des fichiers
      * Et sélectionne le fichier recherhé
+     * En même temps, il y a récupération de données : le fichier, le userService lié, le BigInteger lié, la clef AES liée
      * @return
      */
     private boolean testFile ()
@@ -68,7 +68,6 @@ public class TestFichier extends TestChemin {
         {
             for (File item : fList)
             {
-//				testName = item.getPath().substring(item.getPath().lastIndexOf("\\")+1,item.getPath().indexOf("_") );
                 testName = item.getPath().substring(item.getPath().indexOf("_")+1,item.getPath().lastIndexOf("-") );
 
                 if (testName.equals(fileName)) {
@@ -76,8 +75,6 @@ public class TestFichier extends TestChemin {
                     this.userService = testName;
                     this.aesBigI = new BigInteger(/*"-"+*/item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
                     this.aesKey = Integer.parseInt(item.getPath().substring(item.getPath().lastIndexOf("-")+1, item.getPath().length() ));
-                    System.out.println(aesBigI.toString());
-
                 }
                 else
                 {
@@ -88,6 +85,12 @@ public class TestFichier extends TestChemin {
         return true ;
     }
 
+    /**
+     * Teste si le fichier contient dans son nom, le BigInteger recherché
+     * En même temps, il y a récupération de données : le fichier, le userService lié, clef AES liée
+     * @param bigInt
+     * @return
+     */
     public boolean testFile (String bigInt)
     {
         File[] fList = file.listFiles();
@@ -101,13 +104,11 @@ public class TestFichier extends TestChemin {
         {
             for (File item : fList)
             {
-//				testName = item.getPath().substring(item.getPath().lastIndexOf("\\")+1,item.getPath().indexOf("_") );
                 testBigI = item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") );
                 if (testBigI.equals(bigInt)) {
                     this.prospectFile = item ;
                     this.aesBigI = new BigInteger(/*"-"+*/item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
                     this.userService = item.getPath().substring(item.getPath().indexOf("_")+1,item.getPath().lastIndexOf("-") );
-
                 }
                 else
                 {
@@ -160,7 +161,7 @@ public class TestFichier extends TestChemin {
     }
 
     /**
-     * Affiche le nom du fichier recherché (utile seuleement pour vérifier si le fichier existe et savoir l'encodage AES)
+     * Affiche l'adresse du fichier recherché (utile seuleement pour vérifier si le fichier existe et savoir l'encodage AES)
      *
      */
     public void viewFile ()
@@ -174,11 +175,14 @@ public class TestFichier extends TestChemin {
 
     }
 
+    /**
+     * Lister tous fichiers (adresse) pour les userService déjà existants
+     */
     public void listUserService()
     {
         if(!testFile())
         {
-            System.out.println("Aucun fichier créé !");
+            System.out.println("Aucun fichier trouvé !");
             return ;
         }
         File[] fList = file.listFiles();
@@ -187,7 +191,6 @@ public class TestFichier extends TestChemin {
         for (File item : fList)
         {
             System.out.println(item.getPath());
-//			System.out.println(item.getPath().substring(0,item.getPath().indexOf("_") );
         }
 
     }

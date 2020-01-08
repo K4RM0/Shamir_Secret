@@ -23,6 +23,13 @@ public class EncryptSecretText {
     private TestDossier dirUtil = null ;
     private DfileName fileName = null;
 
+    /**
+     * Méthode permettant de crypté le secret en enregistrant dans un fichier le bigInteger (en byte)
+     * Il y a aussi, pour l'exercice, enregistrement du secret non crypté dans un fichier.txt dont le nom est crypté
+     * @param userService
+     * @param key_length
+     * @param entree
+     */
     public void chiffrement_sym(String userService,int key_length, String entree )
     {
         aesKey = new GenAESkey(userService, key_length);

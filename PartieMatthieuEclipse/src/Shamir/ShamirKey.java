@@ -21,7 +21,7 @@ public class ShamirKey{
 
     /**
      * Set x value
-     * @param x Public part
+     * @param x Public key
      */
     public void setX(BigInteger x){this.x = x;}
 

@@ -3,18 +3,12 @@ package verif;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * Classe héritant de TestChemin
+ * Teste si dossier existe et en crée un si besoin
+ * et teste si dossier vide
+ */
 public class TestDossier extends TestChemin {
-
-
-    /**
-     * Test si dossier existe
-     *
-     * Entrée : nom dossier
-     *
-     * Apelle : décryptage nom du dossier
-     *
-     */
-
     public TestDossier (String path)
     {
         super(path);
@@ -60,7 +54,6 @@ public class TestDossier extends TestChemin {
         if(testDir())
         {
             if (fList.length == 0){
-                System.out.println("Liste vide");
                 return true ;
             }
         }

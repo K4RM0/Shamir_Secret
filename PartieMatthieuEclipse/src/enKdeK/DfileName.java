@@ -12,16 +12,11 @@ public class DfileName implements TextEncryptor{
     final static File stockClear = new File ("PartieMatthieuEclipse/stockageSecretNonCrypt");
     private static final String complement = "/ka" ;
 
-
-    /*	public TransfStringEtInv(byte[] key) {
-        //	this.enc = key;
-        //	this.dec = key;
-        }
-
-        public TransfStringEtInv(String utf8Key) {
-            this(utf8Key.getBytes(StandardCharsets.UTF_8));
-        }
-    */
+    /**
+     * Cette classe encrypte et décrypte l nom du fichier où le secret est stocké en clair
+     * ce qui est crypté contient le "UserService"
+     * @param text
+     */
     public DfileName(String text) {
 
     }

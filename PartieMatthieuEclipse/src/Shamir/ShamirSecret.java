@@ -17,7 +17,6 @@ public class ShamirSecret {
     private BigInteger fxValue ;
     private ShamirKey [] shamKey ;
 
-
     /**
      * Créer le partage du secret --- Create a share using Shamir's scheme
      * @param x Morceau partagé  ---  Shamir's shares
@@ -26,27 +25,13 @@ public class ShamirSecret {
      *
      */
 
-    private BigInteger primeNbr (BigInteger valInit)	{
-        // recherche du probable nbre premier plus grand que valInit
-
-        BigInteger borne = valInit;
-        BigInteger prime;
-        BigInteger test = borne;
-//		BigInteger step = 10;
-
-        // recherche d'un premier plus petit que borne
-
-/*		do {
-//			valInit = valInit - step;
-///		    step *= 2;
-		    prime = valInit.nextProbablePrime();
-		} while(prime < valInit);
-
-*/
-        return borne;
-    }
-
-    protected boolean isRepeat(BigInteger x, ShamirKey[] k){
+    /**
+     * Vérifie si x est une clef Shamir
+     * @param x
+     * @param k
+     * @return
+     */
+    public boolean isRepeat(BigInteger x, ShamirKey[] k){
         if(k.length == 0)
             return false;
 
@@ -61,7 +46,8 @@ public class ShamirSecret {
     }
 
     /**
-     * Calculate polynomial
+     * Private
+     * Calculate polynomial to generate shares
      * @param s parameters of polynomial
      * @param x variable of polynomial
      * @param p prime number just au-dessus de notre limite (for calulate mod (modulo))
@@ -78,37 +64,10 @@ public class ShamirSecret {
     }
 
     /**
-     * Generate parameters of polynomial
-     * @param t number of shares for solve Shamir scheme
-     * @param numBits number of bits of parameters
-     * @param SecretBytes secret
-     * @return parameters of polynomial
-     * @throw shamirException
-     */
- /*   public BigInteger[] generateParameters(int t, int numBits, byte[] SecretBytes)throws ExceptionShamirSecret{
-        BigInteger secret = new BigInteger(SecretBytes);
-
-        if(secret.bitLength() >= numBits)
-            throw new ExceptionShamirSecret("Nombre de bits de protection trop petit");
-
-        BigInteger s[] = new BigInteger[t];
-        s[0] = secret;
-        //System.out.println("s(0) = " + secret + " (secret)" );
-
-        for(int i = 1; i < t; i++){
-            s[i] = new BigInteger(numBits, new Random());
-            //System.out.println("s("+i+") = " +s[i]);
-        }
-
-        return s;
-    }
-    */
-
-    /**
-     *
+     *Génération des paramètres du polynôme
      * @param t  ==  nombre de part pour résoudre le secret
      * @param numBits  == Key_Length (128, 198, 256)
-     * @param SecretBI
+     * @param secretBI
      * @return
      * @throws ExceptionShamirSecret
      */
@@ -154,7 +113,6 @@ public class ShamirSecret {
      * @param sk
      * @return
      */
-
     public byte[] calculateLagrange(ShamirKey[] sk){
         BigInteger p = sk[0].getP();
         BigInteger d;
@@ -205,7 +163,7 @@ public class ShamirSecret {
             keys[i-1].getX();        // récup de la valeur pour tout x (même celle de Keys[0])
             keys[i-1].getF();        // récup de la valeur pour tout fx (même celle de Keys[0])
 
-            System.out.println(i+"-> f("+x+") = " +keys[i-1].getF());
+//            System.out.println(i+"-> f("+x+") = " +keys[i-1].getF());
         }
         this.shamKey = keys ;
 
