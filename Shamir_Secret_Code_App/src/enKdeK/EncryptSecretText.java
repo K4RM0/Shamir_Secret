@@ -49,9 +49,6 @@ public class EncryptSecretText {
             byte[] buf_crypt = c.doFinal(entree.getBytes("UTF-8"));
             byte[] buf_cryptClear = c.doFinal(clearData);
 
-            System.out.println("+++++++++++++++++++++++++++++++++ resultat"+buf_crypt.toString());
-            System.out.println("+++++++++++++++++++++++++++++++++ resultat"+ byteHexaToString(buf_crypt));
-
 // permet d'afficher l'élément crypté en string pour être sur que le cryptage est réussi
 //	      System.out.println( byteHexaToString (buf_crypt) );
 
@@ -81,14 +78,10 @@ public class EncryptSecretText {
             byte [] paramAES = cle_aes.getEncoded();
             BigInteger aesBigI = new BigInteger (paramAES);
             String aesBI = aesBigI.toString().substring(1);
-            System.out.println("YYYYYYYYYYYY bu : " + aesBigI.toString());
 
             FileOutputStream envfos = new FileOutputStream(stockCrypt.getAbsolutePath() + "/" + aesBI + "_" + userService + "-" + key_length);
             envfos.write(tab);
             envfos.close();
-
-            System.out.println("YYYY : " +stockCrypt.getAbsolutePath() + "/" + aesBI + "_" + userService + "-" + key_length);
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,4 +98,6 @@ public class EncryptSecretText {
 
         return result;
     }
+
+
 }
