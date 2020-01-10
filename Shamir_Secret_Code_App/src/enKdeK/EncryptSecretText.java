@@ -85,15 +85,21 @@ public class EncryptSecretText {
             byte [] paramAES = cle_aes.getEncoded();
             BigInteger aesBigI = new BigInteger (paramAES);
             String aesBI = aesBigI.toString().substring(1);
+<<<<<<< HEAD
             System.out.println("YYYYYYYYYYYY bu : " + aesBigI.toString());
+=======
+>>>>>>> origin/master
 
             FileOutputStream envfos = new FileOutputStream(stockCrypt.getAbsolutePath() + "/" + aesBI + "_" + userService + "-" + key_length);
             envfos.write(tab);
             envfos.close();
 
+<<<<<<< HEAD
             System.out.println("YYYY : " +stockCrypt.getAbsolutePath() + "/" + aesBI + "_" + userService + "-" + key_length);
 
 
+=======
+>>>>>>> origin/master
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,4 +115,9 @@ public class EncryptSecretText {
 
         return result;
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master
 }
