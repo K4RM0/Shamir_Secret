@@ -17,6 +17,7 @@ public class TestFichier extends TestChemin {
     private String fileName ;
     private String dirPath  ;
     private String userService ;
+    private String bigInt;
     private int aesKey ;
     private File prospectFile;
     private BigInteger aesBigI ;
@@ -37,6 +38,7 @@ public class TestFichier extends TestChemin {
         this.dirPath = dirPath ;
         this.dossier = new TestDossier(dirPath);
         this.fileName = fileName ;
+        this.bigInt = "";
 
     }
 
@@ -57,6 +59,7 @@ public class TestFichier extends TestChemin {
      */
     private boolean testFile ()
     {
+        String temp;
         File[] fList = file.listFiles();
         String testName = null ;
 
@@ -64,25 +67,33 @@ public class TestFichier extends TestChemin {
             System.out.println("Error systemFile");
             return false ;
         }
-        else
-        {
-            for (File item : fList)
-            {
-                testName = item.getPath().substring(item.getPath().indexOf("_")+1,item.getPath().lastIndexOf("-") );
 
-                if (testName.equals(fileName)) {
-                    this.prospectFile = item ;
-                    this.userService = testName;
-                    this.aesBigI = new BigInteger(/*"-"+*/item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
-                    this.aesKey = Integer.parseInt(item.getPath().substring(item.getPath().lastIndexOf("-")+1, item.getPath().length() ));
-                }
-                else
+        for (File item : fList)
+        {
+            testName = item.getPath().substring(item.getPath().lastIndexOf("_")+1,item.getPath().lastIndexOf("-") );
+            System.out.println("Test file user " + userService);
+
+            if (testName.equals(fileName)) {
+                temp = item.getPath().substring(item.getPath().lastIndexOf("\\")+1) ;
+
+                this.prospectFile = item ;
+                this.userService = testName;
+                this.aesBigI = new BigInteger(temp.substring(0, temp.lastIndexOf("_") ), 32);
+                if (temp.startsWith("0"))
                 {
-                    System.out.println("Le fichier n'existe pas.");
+                    aesBigI = aesBigI.negate();
                 }
+
+                this.aesKey = Integer.parseInt(item.getPath().substring(item.getPath().lastIndexOf("-")+1, item.getPath().length() ));
+
+                System.out.println("BIGINT TESTFILE () " + aesBigI);
+
+                return true ;
             }
+
         }
-        return true ;
+
+        return false ;
     }
 
     /**
@@ -95,7 +106,7 @@ public class TestFichier extends TestChemin {
     {
         File[] fList = file.listFiles();
         String testBigI = null ;
-
+        boolean test;
         if (dossier.emptyDir()){
             System.out.println("Error systemFile");
             return false ;
@@ -104,20 +115,28 @@ public class TestFichier extends TestChemin {
         {
             for (File item : fList)
             {
-                testBigI = item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") );
+                testBigI = item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().lastIndexOf("_") );
+                this.aesBigI = new BigInteger(/*"-"+*/testBigI, 32 );
+
+                if (testBigI.startsWith("0"))
+                {
+                    aesBigI = aesBigI.negate();
+                }
+
                 if (testBigI.equals(bigInt)) {
                     this.prospectFile = item ;
-                    this.aesBigI = new BigInteger(/*"-"+*/item.getPath().substring(item.getPath().lastIndexOf("\\")+1, item.getPath().indexOf("_") ));
-                    this.userService = item.getPath().substring(item.getPath().indexOf("_")+1,item.getPath().lastIndexOf("-") );
-                }
-                else
-                {
-                    System.out.println("Vous n'avez pas fourni les bonnes informations");
-                    return false;
+
+                    System.out.println("informations TEst BigInt");
+
+                    this.aesBigI = new BigInteger(/*"-"+*/testBigI, 32 );
+                    this.userService = item.getPath().substring(item.getPath().lastIndexOf("_")+1,item.getPath().lastIndexOf("-") );
+                    return true;
                 }
             }
         }
-        return true ;
+        System.out.println("Vous n'avez pas fourni les bonnes informations");
+
+        return false ;
     }
 
     /**

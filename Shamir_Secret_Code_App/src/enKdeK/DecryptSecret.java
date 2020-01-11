@@ -16,25 +16,29 @@ import java.security.spec.AlgorithmParameterSpec;
 
 public class DecryptSecret {
 
-    final static File stockCrypt = new File ("PartieMatthieuEclipse/stockageSecretCrypt");
-    final static File stockClear = new File ("PartieMatthieuEclipse/stockageSecretNonCrypt");
+    final static File stockCrypt = new File ("Shamir_Secret_Code_App/stockageSecretCrypt");
+    final static File stockClear = new File ("Shamir_Secret_Code_App/stockageSecretNonCrypt");
     private GenAESkey aesKey = null;
     private TestFichier fileUtil = null ;
     private TestDossier DirUtil = null ;
     private DfileName fileName = null;
 
-    public void decrypt_sym(BigInteger bigInt ) throws IOException {
+    public void decrypt_sym(BigInteger bigInt, String userService ) throws IOException {
 
-        fileUtil = new TestFichier(stockCrypt.getPath());
-        String userService = fileUtil.getUserService();
+        System.out.println("BINT :" +userService);
+
+        fileUtil = new TestFichier(stockCrypt.getAbsolutePath(), userService);
+        File file = fileUtil.takeFile() ;
+//        String userService = fileUtil.getUserService();
         int key_length = fileUtil.getAes();
         System.out.println("getAesKey : " + key_length);
         aesKey = new GenAESkey(userService);
         try {
 //		   SecretKey cle_aes = aesKey.clef(key_length);
 
-            BigInteger aesBigI = fileUtil.getAesBigI();
-            SecretKey cle_aes2 = new SecretKeySpec(aesBigI.toByteArray(), "AES");
+            BigInteger aesBigI = bigInt;
+//            SecretKey cle_aes2 = new SecretKeySpec(aesBigI.toByteArray(), "AES");
+            SecretKey cle_aes2 = new SecretKeySpec(bigInt.toByteArray(), "AES");
 //		   KeyGenerator key_gen = KeyGenerator.getInstance(fileUtil.getParamAes());
 //		   SecretKey cle_aes = key_gen.generateKey();
 
@@ -46,7 +50,6 @@ public class DecryptSecret {
             Security.addProvider(new BouncyCastleProvider());
 
             // aller chercher le code secret crypté
-            File file = fileUtil.takeFile() ;
             FileInputStream fis = new FileInputStream(file);
             byte [] buf_crypt2 = new byte [(int) file.length()];
             fis.read(buf_crypt2);
@@ -56,8 +59,9 @@ public class DecryptSecret {
 //Déchiffrement de le chaine
             System.out.println("dechiffrement");
             Cipher c = Cipher.getInstance("AES/CBC/PKCS7PADDING");
-//    c.init(Cipher.DECRYPT_MODE, cle_aes, salt);
+
             c.init(Cipher.DECRYPT_MODE, cle_aes2, salt);
+
 //	byte[] buf_decrypt = c.doFinal( buf_crypt1.getBytes());
 //	byte[] buf_decrypt = c.doFinal( buf_crypt1);
             byte [] buf_crypt3 = new byte[c.getOutputSize(buf_crypt2.length)];

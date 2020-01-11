@@ -8,8 +8,8 @@ import java.nio.charset.StandardCharsets;
 
 public class DfileName implements TextEncryptor{
 
-    final static File stockCrypt = new File ("PartieMatthieuEclipse/stockageSecretCrypt");
-    final static File stockClear = new File ("PartieMatthieuEclipse/stockageSecretNonCrypt");
+    final static File stockCrypt = new File ("Shamir_Secret_Code_App/stockageSecretCrypt");
+    final static File stockClear = new File ("Shamir_Secret_Code_App/stockageSecretNonCrypt");
     private static final String complement = "/ka" ;
 
     /**

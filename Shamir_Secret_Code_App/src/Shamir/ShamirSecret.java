@@ -74,6 +74,8 @@ public class ShamirSecret {
             result = result.add(s[i].multiply(x.pow(i)));
 
         result = result.mod(p);
+
+        System.out.println("bigIneteger decrypt Shamir " + result);
         return result;
     }
 
@@ -108,17 +110,20 @@ public class ShamirSecret {
      *
      * @param t  ==  nombre de part pour résoudre le secret
      * @param numBits  == Key_Length (128, 198, 256)
-     * @param SecretBI
+     * @param secretBI
      * @return
      * @throws ExceptionShamirSecret
      */
     private BigInteger[] generateParameters(int t, int numBits, BigInteger secretBI)throws ExceptionShamirSecret{
 
         if(secretBI.bitLength() >= numBits)
-            throw new ExceptionShamirSecret("Nombre de bits de protection est trop petit");
+            throw new ExceptionShamirSecret("Nombre de bits de protection est trop petit ! \n" +
+                    "Voud devez choisir un nombre au-dessus de " + numBits + " pour ce secret ! \n" +
+                    "Veuillez recommencer toute l'opération, SVP.");
 
         // Nombre premier juste au-dessus BI secret >> limite Max
-        BigInteger sPremBI = secretBI.nextProbablePrime();
+        BigInteger secretBIAbs = secretBI.abs();
+        BigInteger sPremBI = secretBIAbs.nextProbablePrime();
 
         // Détermination de la valeur moyenne entre limite max(nombre premier juste au-dessus secretBI) et minValue
         BigInteger tempVal = sPremBI.subtract(minValue);
@@ -133,7 +138,7 @@ public class ShamirSecret {
         //System.out.println("s(0) = " + secret + " (secret)" );
 
         for(int i = 1; i < t; i++){
-            keyBI = new BigInteger(len, new SecureRandom()).mod(secretBI);
+            keyBI = new BigInteger(len, new SecureRandom()).mod(secretBIAbs);
             if (keyBI.compareTo(minValue) < 0)
                 keyBI = keyBI.add(minValue);
             if (keyBI.compareTo(tempVal) >= 0)
@@ -142,7 +147,7 @@ public class ShamirSecret {
             s[i] = keyBI;
 
             keyBI = null;
-            //System.out.println("s("+i+") = " +s[i]);
+            System.out.println("s("+i+") = " +s[i]);
         }
 
         return s;
@@ -157,6 +162,7 @@ public class ShamirSecret {
 
     public byte[] calculateLagrange(ShamirKey[] sk){
         BigInteger p = sk[0].getP();
+        System.out.println("getP LAgrange " + p);
         BigInteger d;
         BigInteger D;
         BigInteger c;
@@ -173,19 +179,25 @@ public class ShamirSecret {
             c = d.multiply(D.modInverse(p)).mod(p);
             S = S.add(c.multiply(sk[i].getF())).mod(p);
         }
+
         return S.toByteArray();
     }
 
     /**
+     * s = nombre premier limite supérieur
+     * prime = modulo
      * n = nombre de parts créés >> combien en créer et comment les gérer ???
      * Générer les clefs/parts pour Shamir
      */
     public ShamirKey[] generateKeys(int n, int t, int numBits, BigInteger secretBI)throws ExceptionShamirSecret{
-        BigInteger[] s = generateParameters( t, numBits, secretBI);
+//        public ShamirKey[] generateKeys(int t, int n, int numBits, BigInteger secretBI)throws ExceptionShamirSecret{
+        System.out.println("BI "+ secretBI);
+
+        BigInteger[] s = generateParameters( t, numBits, secretBI.abs());
         ShamirKey[] keys = new ShamirKey[n];
         if(s[0].bitLength() >= numBits)
             throw new ExceptionShamirSecret("Nombre de bits trop petit");
-        if(n > t)
+        if(t > n)
             throw new ExceptionShamirSecret("Il faut plus de parts à partager, SVP.");
 
         BigInteger prime = BigInteger.probablePrime(numBits, new Random());
@@ -202,14 +214,15 @@ public class ShamirSecret {
             keys[i-1].setX(x);        /// part à "donner"
             keys[i-1].setF(fx);		  /// part à donner (?)
 
-            keys[i-1].getX();        // récup de la valeur pour tout x (même celle de Keys[0])
+/*            keys[i-1].getX();        // récup de la valeur pour tout x (même celle de Keys[0])
             keys[i-1].getF();        // récup de la valeur pour tout fx (même celle de Keys[0])
-
+*/
             System.out.println(i+"-> f("+x+") = " +keys[i-1].getF());
+            System.out.println("Prime "+ keys[i-1].getP());
         }
         this.shamKey = keys ;
 
-        keys[0].getP();        // récup de la valeur du Prime
+//        keys[0].getP();        // récup de la valeur du Prime
 
 
         return keys;

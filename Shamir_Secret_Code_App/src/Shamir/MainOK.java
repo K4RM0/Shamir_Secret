@@ -9,11 +9,8 @@ import java.io.File;
 import java.math.BigInteger;
 import java.util.Scanner;
 
-class Main_TestSSSS {
+public class MainOK {
 
-    /**
-     * @param args
-     */
     final static File stockCrypt = new File ("Shamir_Secret_Code_App/stockageSecretCrypt");
     final static File stockClear = new File ("Shamir_Secret_Code_App/stockageSecretNonCrypt");
     //    final static int n = 9; //number of generate shares
@@ -124,13 +121,10 @@ class Main_TestSSSS {
                     System.out.println(fileUtile.takeFile().getAbsolutePath());
 
                 }
+                cpt = 0;
+
                 if(fileUtile.validFile())
                 {
-
-  /*                  System.out.println(fileUtile.getAesBigI().toString());
-                    System.out.println(fileUtile.takeFile().getPath());
-                    System.out.println(fileUtile.getAes());
-*/
                     /// demande du nombre de bits de cryptage (128, 192 ou 256)
                     System.out.println("Saisir le nombre de bits d'encodage (128, 192 ou 256) : \n");
 
@@ -140,11 +134,7 @@ class Main_TestSSSS {
                     if(numBitsTemp == 128 || numBitsTemp== 256)
                         numBits=numBitsTemp;
 
-/*                    /// demande du nombre de parts du secret à créer
-                    System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \n");
 
-                    nbrSharedKey = saisiIntConsole();
-*/
                     // (vérifier que le nombre de part est supérieur à 2          ??????????????????   )
                     while (nbrKeyUtil < 2 )
                     {
@@ -158,8 +148,6 @@ class Main_TestSSSS {
                             return;
                         }
                     }
-
-
 
                     do
                     {
@@ -176,108 +164,50 @@ class Main_TestSSSS {
                     shamirSecret = new ShamirSecret();
 
                     ShamKey = shamirSecret.generateKeys( nbrSharedKey,nbrKeyUtil, numBits, secretBigI);
-
-/*                 JSONArray list = new JSONArray();
-                   list.add("Java");
-*/
-
-// l'affichage à la console est fait depuis la méthode appelée
-
-//                    newDirectory = 4;
                 }
-/*                else
-                {
-                    newDirectory = 4;
-                }
-            }
 
- */
                 // // //////////////////////////////révélation du secret //////////////////////////////////
-/*            if (newDirectory == 3)
-            {
-
- */
-                ///// Cette partie est à adapter avec le code Json
-                // car il faudrait peut-être vérifier à chaque saisie
-                // (surtout si on ne donne qu'une valeur hexadécimal à la place du BigInteger x et qu'on ne demande pas le F(x) )
-//               String userSecret ="";
-/*                ArrayList<BigInteger> keys = null;
-                String tempX = "0";
-                String tempFX = "0";
-                int cptKey = 0;
-*/
-                /// demande UserService
-/*                System.out.println("Saisir le nom du service à accéder\n"
+                /// demande du UserService
+                System.out.println("Saisir le nom du service de destination \n"
                         + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
 
                 userService = saisiStringConsole();
                 userService = new formatUserService().formatUserService(userService);
-*/
-                /// demande de la saisie des parts (jusqu'à ce que les utilisateurs signalent qu'ils ont saisi toutes les parts)
- /*               do {
-                    System.out.println("Saisir le x numéro " + cptKey + " :\n");
-                    tempX = saisiStringConsole();
-                    keys.add( new BigInteger (tempX ));
 
-                    System.out.println("Saisir le Fx numéro " + cptKey + " :\n");
-                    tempX = saisiStringConsole();
-                    keys.add( new BigInteger (tempFX ));
+                fileUtile = new TestFichier(stockCrypt.getPath(), userService);
 
-                    cptKey++;
+                while(!fileUtile.validFile() && cpt<=3 )
+                {
+                    System.out.println("Erreur dans la saisie du nom du service de destination  \n" +
+                            "Saisissez à nouveau le nom du service souhaité.\n"
+                            + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
 
-                }while(tempX != "" && tempFX !="");
+                    userService = saisiStringConsole();
+                    fileUtile = new TestFichier(stockCrypt.getPath(), userService);
+                    cpt++;
+                }
+                cpt = 0;
 
-                /// reconstruction shamir
-                if(keys.isEmpty())
-                    return;
-*/
-
-				/*
-				 Rechercher :
-
-				 shamirKey [] en rapport avec le userService
-				*/
-				/*
-
-				récupérer :
-
-				 prime généré dans la méthode
-				 ShamirKey[] generateKeys(int n, int t, int numBits, BigInteger secretBI)
-				 de la classe shamirSecret
-
-				 Puis :
-
-				 sk2 = ShamirKey [] creaShamirKeys (BigInteger [] entry, BigInteger prime)
-				 pour générer le tableau qui servira à tenter la reconstruction du shamir secret
-
-				 Puis :
-*/				 //RESOLUTION SHAMIR, calculate parameter 0 (secret)
+				 //RESOLUTION SHAMIR, calculate parameter 0 (secret)
                 byte[] des = shamirSecret.calculateLagrange(ShamKey);
 
                 BigInteger secretFound = new BigInteger(des);
-                System.out.println(" secret BI decrypt : " + secretFound.toString());
-/*		!!!!!!!!!!!!!!!!!!! Attention, je n'ai pas implémenter de test boolean
-		pour dire si le secret est bien rerconstruit ou non
-		Je sais seulement que la reconstruction fonctionne
-
-				 (A vous les gars !!!!!!!!!!!!)
-				Et si il faut que je fasse la partie test boolean dont je viens de parler, il n'y a pas de problème.
-
-*/
-
-
-                /// reconstruction secret
-
-				/*
-				 A partir d'ici,
-				 quand on a le BigInteger généré (reconstruit) juste avant, il suffit de  vérifier s'il existe un fichier qui le contient
-*/
 
                 String aesBI = secretFound.toString(32);
+
+                System.out.println(" secret BI decrypt : " + secretFound.toString());
+                System.out.println(" secret aesBI decrypt : " + aesBI);
+
+                if(fileUtile.getAesBigI().compareTo(BigInteger.ONE) < 0) {
+                    secretFound = secretFound.negate();
+                    aesBI = "0" + aesBI;
+
+                    System.out.println(" secret BI decrypt : " + secretFound.toString());
+                }
+                /// reconstruction secret
                 decodSecret = new DecryptSecret();
 
-
-                fileUtile = new TestFichier (stockCrypt.getPath());
+                System.out.println(" secret aesBI decrypt : " + aesBI);
 
                 if (!fileUtile.testFile (aesBI))
                     return ;
@@ -313,6 +243,5 @@ class Main_TestSSSS {
         return get;
     }
 
+
 }
-
-

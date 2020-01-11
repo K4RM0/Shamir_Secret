@@ -16,8 +16,8 @@ import java.security.spec.AlgorithmParameterSpec;
 
 public class EncryptSecretText {
 
-    final static File stockCrypt = new File ("PartieMatthieuEclipse/stockageSecretCrypt");
-    final static File stockClear = new File ("PartieMatthieuEclipse/stockageSecretNonCrypt");
+    final static File stockCrypt = new File ("Shamir_Secret_Code_App/stockageSecretCrypt");
+    final static File stockClear = new File ("Shamir_Secret_Code_App/stockageSecretNonCrypt");
     private GenAESkey aesKey = null;
     private TestFichier fileUtil = null ;
     private TestDossier dirUtil = null ;
@@ -84,22 +84,16 @@ public class EncryptSecretText {
             byte [] tab = bI.toByteArray();
             byte [] paramAES = cle_aes.getEncoded();
             BigInteger aesBigI = new BigInteger (paramAES);
-            String aesBI = aesBigI.toString().substring(1);
-<<<<<<< HEAD
-            System.out.println("YYYYYYYYYYYY bu : " + aesBigI.toString());
-=======
->>>>>>> origin/master
+            String aesBI = aesBigI.toString(32);
+
+            if(aesBI.startsWith("-"))
+                aesBI = "0"+ aesBI.substring(1);
 
             FileOutputStream envfos = new FileOutputStream(stockCrypt.getAbsolutePath() + "/" + aesBI + "_" + userService + "-" + key_length);
             envfos.write(tab);
             envfos.close();
 
-<<<<<<< HEAD
-            System.out.println("YYYY : " +stockCrypt.getAbsolutePath() + "/" + aesBI + "_" + userService + "-" + key_length);
 
-
-=======
->>>>>>> origin/master
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,9 +109,5 @@ public class EncryptSecretText {
 
         return result;
     }
-<<<<<<< HEAD
-=======
 
-
->>>>>>> origin/master
 }

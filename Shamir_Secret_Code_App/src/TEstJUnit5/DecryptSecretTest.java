@@ -1,12 +1,10 @@
 package TEstJUnit5;
 
-import org.junit.jupiter.api.Test;
-
 class DecryptSecretTest {
 
-    @Test
+ /*    @Test
     void decrypt_sym() { // je ne sais pas comment implémenter ce test
- /*       try {
+       try {
 
             Cipher c = Cipher.getInstance("AES/CBC/PKCS7PADDING");
 //    c.init(Cipher.DECRYPT_MODE, cle_aes, salt);
@@ -21,6 +19,8 @@ class DecryptSecretTest {
             e.printStackTrace();
         }
 
-  */
+
     }
+
+  */
 }
