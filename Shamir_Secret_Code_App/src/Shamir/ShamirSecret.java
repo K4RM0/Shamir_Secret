@@ -1,9 +1,16 @@
 package Shamir;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
+
 
 /**
  * <p> Calculate Shamir scheme. You need t shares of n for resolve the secret </p>
@@ -170,12 +177,15 @@ public class ShamirSecret {
      * n = nombre de parts créés >> combien en créer et comment les gérer ???
      * Générer les clefs/parts pour Shamir
      */
-    public ShamirKey[] generateKeys(int n, int t, int numBits, BigInteger secretBI)throws ExceptionShamirSecret{
-//        public ShamirKey[] generateKeys(int t, int n, int numBits, BigInteger secretBI)throws ExceptionShamirSecret{
-        System.out.println("BI "+ secretBI);
+    public ShamirKey[] generateKeys(int n, int t, int numBits, BigInteger secretBI) throws ExceptionShamirSecret, IOException {
+
+        JsonObject jzObject = new JsonObject();
+        Gson sauvGson = new Gson();
+        JsonArray jzTab = new JsonArray();
 
         BigInteger[] s = generateParameters( t, numBits, secretBI.abs());
         ShamirKey[] keys = new ShamirKey[n];
+
         if(s[0].bitLength() >= numBits)
             throw new ExceptionShamirSecret("Nombre de bits trop petit");
         if(t > n)
@@ -196,12 +206,15 @@ public class ShamirSecret {
             keys[i-1].setX(x);        /// part à "donner"
             keys[i-1].setF(fx);		  /// part à donner (?)
 
-/*            keys[i-1].getX();        // récup de la valeur pour tout x (même celle de Keys[0])
-            keys[i-1].getF();        // récup de la valeur pour tout fx (même celle de Keys[0])
-*/
+            jzObject.addProperty("x"+(i-1), keys[i-1].getX());        // récup de la valeur pour tout x (même celle de Keys[0])
+            jzObject.addProperty("Fx"+(i-1),keys[i-1].getF());        // récup de la valeur pour tout fx (même celle de Keys[0])
+            jzObject.addProperty("PrimeNbr"+(i-1), keys[i-1].getP());
+
             System.out.println(i+"-> f("+x+") = " +keys[i-1].getF());
             System.out.println("Prime "+ keys[i-1].getP());
         }
+
+        sauvGson.toJson(jzObject, new FileWriter("/Shamir_Secret_Code_App/JsonFile/" + secretBI.abs().toString()));
         this.shamKey = keys ;
 
 //        keys[0].getP();        // récup de la valeur du Prime

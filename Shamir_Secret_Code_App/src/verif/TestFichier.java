@@ -85,8 +85,6 @@ public class TestFichier extends TestChemin {
 
                 this.aesKey = Integer.parseInt(item.getPath().substring(item.getPath().lastIndexOf("-")+1, item.getPath().length() ));
 
-                System.out.println("BIGINT TESTFILE () " + aesBigI);
-
                 return true ;
             }
 
