@@ -26,25 +26,6 @@ public class ShamirSecret {
      *
      */
 
-    private BigInteger primeNbr (BigInteger valInit)	{
-        // recherche du probable nbre premier plus grand que valInit
-
-        BigInteger borne = valInit;
-        BigInteger prime;
-        BigInteger test = borne;
-//		BigInteger step = 10;
-
-        // recherche d'un premier plus petit que borne
-
-/*		do {
-//			valInit = valInit - step;
-///		    step *= 2;
-		    prime = valInit.nextProbablePrime();
-		} while(prime < valInit);
-
-*/
-        return borne;
-    }
 
     protected boolean isRepeat(BigInteger x, ShamirKey[] k){
         if(k.length == 0)
@@ -198,7 +179,8 @@ public class ShamirSecret {
         if(s[0].bitLength() >= numBits)
             throw new ExceptionShamirSecret("Nombre de bits trop petit");
         if(t > n)
-            throw new ExceptionShamirSecret("Il faut plus de parts à partager, SVP.");
+            throw new ExceptionShamirSecret("Il faut plus de parts à partager.\n" +
+                    "Vous devez tout recommencer.");
 
         BigInteger prime = BigInteger.probablePrime(numBits, new Random());
 

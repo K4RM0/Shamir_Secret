@@ -59,12 +59,6 @@ public class GenAESkey {
             //generation de la clé
             KeyGenerator key_gen = KeyGenerator.getInstance("AES","BC"); //  instance du generateur AES.
 
-	    /*
-	     SecureRandom sec_rand = SecureRandom.getInstance("SHA1PRNG","SUN");
-	     key_gen.init(key_len,sec_rand); // Configurer avec les bits de "key_size" en utilisant "sec-rand" salted PRNG.
-	     * Impossible de décrypter si on conserve le SecurRandom
-	     */
-
             key_gen.init(key_len); // Configurer avec les bits de "key_size"
             SecretKey cle_aes = key_gen.generateKey(); //Generer la clef
 

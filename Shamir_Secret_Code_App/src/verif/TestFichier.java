@@ -71,7 +71,6 @@ public class TestFichier extends TestChemin {
         for (File item : fList)
         {
             testName = item.getPath().substring(item.getPath().lastIndexOf("_")+1,item.getPath().lastIndexOf("-") );
-            System.out.println("Test file user " + userService);
 
             if (testName.equals(fileName)) {
                 temp = item.getPath().substring(item.getPath().lastIndexOf("\\")+1) ;
@@ -125,10 +124,7 @@ public class TestFichier extends TestChemin {
 
                 if (testBigI.equals(bigInt)) {
                     this.prospectFile = item ;
-
-                    System.out.println("informations TEst BigInt");
-
-                    this.aesBigI = new BigInteger(/*"-"+*/testBigI, 32 );
+                    this.aesBigI = new BigInteger(testBigI, 32 );
                     this.userService = item.getPath().substring(item.getPath().lastIndexOf("_")+1,item.getPath().lastIndexOf("-") );
                     return true;
                 }

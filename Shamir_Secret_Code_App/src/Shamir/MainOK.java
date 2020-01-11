@@ -195,19 +195,13 @@ public class MainOK {
 
                 String aesBI = secretFound.toString(32);
 
-                System.out.println(" secret BI decrypt : " + secretFound.toString());
-                System.out.println(" secret aesBI decrypt : " + aesBI);
-
                 if(fileUtile.getAesBigI().compareTo(BigInteger.ONE) < 0) {
                     secretFound = secretFound.negate();
                     aesBI = "0" + aesBI;
-
-                    System.out.println(" secret BI decrypt : " + secretFound.toString());
                 }
+
                 /// reconstruction secret
                 decodSecret = new DecryptSecret();
-
-                System.out.println(" secret aesBI decrypt : " + aesBI);
 
                 if (!fileUtile.testFile (aesBI))
                     return ;

@@ -25,22 +25,18 @@ public class DecryptSecret {
 
     public void decrypt_sym(BigInteger bigInt, String userService ) throws IOException {
 
-        System.out.println("BINT :" +userService);
-
         fileUtil = new TestFichier(stockCrypt.getAbsolutePath(), userService);
         File file = fileUtil.takeFile() ;
-//        String userService = fileUtil.getUserService();
         int key_length = fileUtil.getAes();
-        System.out.println("getAesKey : " + key_length);
         aesKey = new GenAESkey(userService);
+
         try {
-//		   SecretKey cle_aes = aesKey.clef(key_length);
+
 
             BigInteger aesBigI = bigInt;
-//            SecretKey cle_aes2 = new SecretKeySpec(aesBigI.toByteArray(), "AES");
+
             SecretKey cle_aes2 = new SecretKeySpec(bigInt.toByteArray(), "AES");
-//		   KeyGenerator key_gen = KeyGenerator.getInstance(fileUtil.getParamAes());
-//		   SecretKey cle_aes = key_gen.generateKey();
+
 
             // Récupération de l'iv
             AlgorithmParameterSpec  salt = new IvParameterSpec("0123456789ABCDEF".getBytes());
@@ -67,9 +63,6 @@ public class DecryptSecret {
             byte [] buf_crypt3 = new byte[c.getOutputSize(buf_crypt2.length)];
             byte[] buf_decrypt = c.doFinal(buf_crypt2,0, buf_crypt2.length);
             String decrypted = new String (c.doFinal(buf_crypt2), "UTF-8");
-
-            System.out.println( "Decrypté : " + buf_decrypt.toString());
-            System.out.println( "Decrypté : " +decrypted);
 
             ///////////////////////
 /*	// sauvegarde ds un fichier uniquement pour vérifier mais sans intérêt (il me semble)   >>>>>>  pour test ?????
