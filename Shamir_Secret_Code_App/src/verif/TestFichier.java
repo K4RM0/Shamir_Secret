@@ -52,6 +52,38 @@ public class TestFichier extends TestChemin {
     }
 
     /**
+     * Test si le fichier Json est OK
+     */
+    public boolean JsonFile ()
+    {
+        String temp;
+        File[] fList = file.listFiles();
+        String testName = null ;
+
+        if (dossier.emptyDir()){
+            System.out.println("Error systemFile");
+            return false ;
+        }
+
+        for (File item : fList)
+        {
+            testName = item.getPath().substring(item.getPath().lastIndexOf("_")+1, item.getPath().indexOf("."));
+            System.out.println("testName JsonFile " + testName);
+            if (testName.equals(fileName)) {
+                temp = item.getPath().substring(item.getPath().lastIndexOf("\\")+1) ;
+
+                this.prospectFile = item ;
+                this.bigInt = temp.substring(0, temp.lastIndexOf("_") );
+
+                return true ;
+            }
+
+        }
+
+        return false ;
+    }
+
+    /**
      * Test si le dossier contient des fichiers
      * Et sélectionne le fichier recherhé
      * En même temps, il y a récupération de données : le fichier, le userService lié, le BigInteger lié, la clef AES liée
@@ -92,6 +124,7 @@ public class TestFichier extends TestChemin {
 
         return false ;
     }
+
 
     /**
      * Teste si le fichier contient dans son nom, le BigInteger recherché
@@ -168,6 +201,18 @@ public class TestFichier extends TestChemin {
     public File takeFile()
     {
         if(!testFile())
+            System.out.println("Le fichier n'existe pas.");
+
+        return prospectFile;
+    }
+
+    /**
+     * retourne le fichier.json à consulter
+     *
+     */
+    public File takeJson()
+    {
+        if(!JsonFile())
             System.out.println("Le fichier n'existe pas.");
 
         return prospectFile;

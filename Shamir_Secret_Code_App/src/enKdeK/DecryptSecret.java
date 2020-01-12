@@ -58,18 +58,12 @@ public class DecryptSecret {
 
             c.init(Cipher.DECRYPT_MODE, cle_aes2, salt);
 
-//	byte[] buf_decrypt = c.doFinal( buf_crypt1.getBytes());
-//	byte[] buf_decrypt = c.doFinal( buf_crypt1);
             byte [] buf_crypt3 = new byte[c.getOutputSize(buf_crypt2.length)];
             byte[] buf_decrypt = c.doFinal(buf_crypt2,0, buf_crypt2.length);
             String decrypted = new String (c.doFinal(buf_crypt2), "UTF-8");
 
-            ///////////////////////
-/*	// sauvegarde ds un fichier uniquement pour vérifier mais sans intérêt (il me semble)   >>>>>>  pour test ?????
-	envfos = new FileOutputStream("D:\\Cours\\3eme semestre\\Math\\Projet\\TEst\\fichier_dechiffre");
-	envfos.write(buf_decrypt);
-	envfos.close();
-*/
+            System.out.println("Le secret est :\n" + decrypted);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
