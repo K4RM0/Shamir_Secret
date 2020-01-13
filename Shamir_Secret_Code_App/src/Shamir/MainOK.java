@@ -69,7 +69,7 @@ public class MainOK {
                 if(!fileUtile.validFile())
                 {
                     /// demande nombre de bits (128 ou 256(defaut))
-                    System.out.println("Saisir le nombre de bits d'encodage (128 ou 256) : \n");
+                    System.out.println("Saisir le nombre de bits d'encodage (128, 192 ou 256) : \n");
 
                     int nbrBitsTemp = saisiIntConsole();
 
