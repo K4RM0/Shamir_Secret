@@ -175,7 +175,7 @@ class Main_TestSSSS {
 
                     shamirSecret = new ShamirSecret();
 
-                    ShamKey = shamirSecret.generateKeys( nbrSharedKey,nbrKeyUtil, numBits, secretBigI, userService);
+                    ShamKey = shamirSecret.generateKeys( nbrSharedKey,nbrKeyUtil, numBits, secretBigI);
 
 /*                 JSONArray list = new JSONArray();
                    list.add("Java");

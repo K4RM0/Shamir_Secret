@@ -2,15 +2,13 @@ package Shamir;
 
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -152,6 +150,7 @@ public class ShamirSecret {
 
     public byte[] calculateLagrange(ShamirKey[] sk){
         BigInteger p = sk[0].getP();
+        System.out.println("getP LAgrange " + p);
         BigInteger d;
         BigInteger D;
         BigInteger c;
@@ -178,12 +177,11 @@ public class ShamirSecret {
      * n = nombre de parts créés >> combien en créer et comment les gérer ???
      * Générer les clefs/parts pour Shamir
      */
-    public ShamirKey[] generateKeys(int n, int t, int numBits, BigInteger secretBI, String userService) throws ExceptionShamirSecret, IOException {
+    public ShamirKey[] generateKeys(int n, int t, int numBits, BigInteger secretBI) throws ExceptionShamirSecret, IOException {
 
-        // pour fichier Json
-        Gson sauvGson = new GsonBuilder().create();
+        JsonObject jzObject = new JsonObject();
+        Gson sauvGson = new Gson();
         JsonArray jzTab = new JsonArray();
-        ArrayList<ShamirKey> keyArrayList = new ArrayList<ShamirKey>();
 
         BigInteger[] s = generateParameters( t, numBits, secretBI.abs());
         ShamirKey[] keys = new ShamirKey[n];
@@ -208,20 +206,24 @@ public class ShamirSecret {
             keys[i-1].setX(x);        /// part à "donner"
             keys[i-1].setF(fx);		  /// part à donner (?)
 
-           // Sauvegarde dans une ArryList pour sauvegarde Json
-            keyArrayList.add(keys[i-1]);
+            jzObject.addProperty("x"+(i-1), keys[i-1].getX());        // récup de la valeur pour tout x (même celle de Keys[0])
+            jzObject.addProperty("Fx"+(i-1),keys[i-1].getF());        // récup de la valeur pour tout fx (même celle de Keys[0])
+            jzObject.addProperty("PrimeNbr"+(i-1), keys[i-1].getP());
+
+            System.out.println(i+"-> f("+x+") = " +keys[i-1].getF());
+            System.out.println("Prime "+ keys[i-1].getP());
         }
 
-        jzTab = sauvGson.toJsonTree(keyArrayList).getAsJsonArray();
-
-        OutputStreamWriter wr= new OutputStreamWriter(new FileOutputStream("Shamir_Secret_Code_App/JsonFile/" + secretBI.abs().toString(32) + "_" + userService + ".json"));
-        wr.write(String.valueOf(jzTab));
-        wr.close();
-
+        sauvGson.toJson(jzObject, new FileWriter("/Shamir_Secret_Code_App/JsonFile/" + secretBI.abs().toString()));
         this.shamKey = keys ;
+
+//        keys[0].getP();        // récup de la valeur du Prime
+
 
         return keys;
     }
+
+
 
     public  ShamirKey[] creaShamirKeys (BigInteger [] entry, BigInteger prime)
     {

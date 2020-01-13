@@ -8,6 +8,10 @@ class ShamirSecretTest {
 
     @Test
     void calculateLagrange() {
+
+
+
+
     }
 
     @Test
