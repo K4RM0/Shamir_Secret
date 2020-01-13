@@ -14,15 +14,15 @@ class ShamirSecretTest {
 
     }
 
-    @Test
+@Test
     void generateKeys() {
-    }
+            }
 
-    @Test
+@Test
     void creaShamirKeys() {
-    }
+            }
 
-    @Test
+@Test
     void getShamKey() {
-    }
-}
+            }
+            }
