@@ -207,7 +207,7 @@ public class ShamirSecret {
             keys[i-1].setX(x);        /// part à "donner"
             keys[i-1].setF(fx);		  /// part à donner (?)
 
-           // Sauvegarde dans une ArryList pour sauvegarde Json
+            // Sauvegarde dans une ArryList pour sauvegarde Json
             keyArrayList.add(keys[i-1]);
         }
 

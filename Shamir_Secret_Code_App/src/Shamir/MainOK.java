@@ -166,8 +166,8 @@ public class MainOK {
                     ShamKey = shamirSecret.generateKeys(nbrSharedKey, nbrKeyUtil, numBits, secretBigI,userService);
                 }
             }
-                if(newDirectory == 3)
-                {
+            if(newDirectory == 3)
+            {
                 // // //////////////////////////////révélation du secret //////////////////////////////////
                 int cpt =0;
                 ShamirSecret shamirSecret = new ShamirSecret();
@@ -196,21 +196,21 @@ public class MainOK {
                 cpt = 0;
 
                 // restitution des donnéees stockées dans Json
-                    File fileJ = fileUtile.takeJson();
+                File fileJ = fileUtile.takeJson();
 
-                    // Extraction des données sauvegardées dans le fichier Json
-                    Gson decryptGson = new GsonBuilder().create ();
-                    ArrayList<ShamirKey> ShamKey  = null ;
-                    Type ListType = new TypeToken<ArrayList<ShamirKey>>(){}.getType();
+                // Extraction des données sauvegardées dans le fichier Json
+                Gson decryptGson = new GsonBuilder().create ();
+                ArrayList<ShamirKey> ShamKey  = null ;
+                Type ListType = new TypeToken<ArrayList<ShamirKey>>(){}.getType();
 
-                    InputStream iStream = new FileInputStream(fileJ.getPath());
-                    InputStreamReader irJ= new InputStreamReader(iStream);
-                    BufferedReader buff=new BufferedReader(irJ);
-                    ShamKey  = decryptGson.fromJson(buff, ListType /* ShamirKey [].class*/  );
-                    buff.close();
+                InputStream iStream = new FileInputStream(fileJ.getPath());
+                InputStreamReader irJ= new InputStreamReader(iStream);
+                BufferedReader buff=new BufferedReader(irJ);
+                ShamKey  = decryptGson.fromJson(buff, ListType /* ShamirKey [].class*/  );
+                buff.close();
 
-                    // But didactique pour être sûr
-                    // que les données récupérées soient les mêmes que celles sauvegardées
+                // But didactique pour être sûr
+                // que les données récupérées soient les mêmes que celles sauvegardées
 /*                    for(int i=1; i< ShamKey.size(); i++)
                     {
                         System.out.println(i+"-> x" + i + " = " +ShamKey.get(i).getF());
@@ -218,14 +218,14 @@ public class MainOK {
                         System.out.println("Prime "+ ShamKey.get(i).getP());
                     }
 */
-                    // Conversion ArrayList en ShamirKey []
-                    ShamirKey [] keys = new ShamirKey[ShamKey.size()];
-                    for (int i=0; i< ShamKey.size(); i++)
-                    {
-                        keys [i] = ShamKey.get(i);
-                    }
+                // Conversion ArrayList en ShamirKey []
+                ShamirKey [] keys = new ShamirKey[ShamKey.size()];
+                for (int i=0; i< ShamKey.size(); i++)
+                {
+                    keys [i] = ShamKey.get(i);
+                }
 
-				 //RESOLUTION SHAMIR, calculate parameter 0 (secret)
+                //RESOLUTION SHAMIR, calculate parameter 0 (secret)
                 byte[] des = shamirSecret.calculateLagrange(keys);
                 BigInteger secretFound = new BigInteger(des);
 
@@ -239,7 +239,7 @@ public class MainOK {
 
                 if(!fileUtileTestBigInt.validFile()) {
                     if(fileUtileTestBigInt.getAesBigI() != secretFound)
-                    return;
+                        return;
                 }
 
                 /// reconstruction secret

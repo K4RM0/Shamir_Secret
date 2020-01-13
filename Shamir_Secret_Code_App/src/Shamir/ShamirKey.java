@@ -43,5 +43,11 @@ public class ShamirKey{
      */
     public BigInteger getX(){return x;}
 
-
+    @Override
+    public String toString() {
+        return "ShamirKey :" +
+                ", p =" + this.p +
+                ", fx =" + this.f +
+                ", x =" + this.x ;
+    }
 }
