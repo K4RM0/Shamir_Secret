@@ -68,7 +68,7 @@ public class MainOK {
                     int nbrBitsTemp = saisiIntConsole();
 
                     // vérifier si le nombre de bits est compatible, sinon valeur par défaut
-                    if(nbrBitsTemp == 128 || nbrBitsTemp== 256)
+                    if(nbrBitsTemp == 128 || nbrBitsTemp== 192)
                         nbrBits=nbrBitsTemp;
 
                     /// demande de la saisie du secret (mini un caractère)
