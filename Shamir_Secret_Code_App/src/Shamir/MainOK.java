@@ -1,18 +1,24 @@
 package Shamir;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import enKdeK.DecryptSecret;
 import enKdeK.EncryptSecretText;
 import verif.TestFichier;
 import verif.formatUserService;
 
-import java.io.File;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainOK {
 
     final static File stockCrypt = new File ("Shamir_Secret_Code_App/stockageSecretCrypt");
     final static File stockClear = new File ("Shamir_Secret_Code_App/stockageSecretNonCrypt");
+    final static File stockJson = new File ("Shamir_Secret_Code_App/JsonFile");
     //    final static int n = 9; //number of generate shares
 //    final static int t = 5; //number of shares for solve the secret (t <= n)
     final static int numBits = 256; //number of bits of p  (à coisir entre 128 et 256)
@@ -92,11 +98,10 @@ public class MainOK {
                 }
             }
             // // création de parts d'un secret
-            if (newDirectory == 2)
-            {
-                int cpt =0;
-                BigInteger secretBigI ;
-                int nbrSharedKey =0;
+            if (newDirectory == 2) {
+                int cpt = 0;
+                BigInteger secretBigI;
+                int nbrSharedKey = 0;
                 int nbrKeyUtil = 0;
                 int numBits = 192; // valeur par défaut
 
@@ -108,8 +113,7 @@ public class MainOK {
                 userService = new formatUserService().formatUserService(userService);
 
                 fileUtile = new TestFichier(stockCrypt.getPath(), userService);
-                while(!fileUtile.validFile() && cpt<=3 )
-                {
+                while (!fileUtile.validFile() && cpt <= 3) {
                     System.out.println("Erreur dans la saisie du nom du service de destination  \n" +
                             "Saisissez à nouveau le nom du service souhaité.\n"
                             + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
@@ -123,50 +127,51 @@ public class MainOK {
                 }
                 cpt = 0;
 
-                if(fileUtile.validFile())
-                {
+                if (fileUtile.validFile()) {
                     /// demande du nombre de bits de cryptage (128, 192 ou 256)
                     System.out.println("Saisir le nombre de bits d'encodage (128, 192 ou 256) : \n");
 
                     int numBitsTemp = saisiIntConsole();
 
                     // vérifier si le nombre de bits est compatible, sinon valeur par défaut
-                    if(numBitsTemp == 128 || numBitsTemp== 256)
-                        numBits=numBitsTemp;
+                    if (numBitsTemp == 128 || numBitsTemp == 256)
+                        numBits = numBitsTemp;
 
 
                     // (vérifier que le nombre de part est supérieur à 2          ??????????????????   )
-                    while (nbrKeyUtil < 2 )
-                    {
+                    while (nbrKeyUtil < 2) {
                         System.out.println("Saisir le nombre de part minimum pour reconstruire le secret (minimum 2 parts) : \n");
 
                         nbrKeyUtil = saisiIntConsole();
                         cpt++;
-                        if(cpt > 3)
-                        {
-                            fileUtile =null;
+                        if (cpt > 3) {
+                            fileUtile = null;
                             return;
                         }
                     }
 
-                    do
-                    {
+                    do {
 
                         System.out.println("Saisir le nombre de partage du secret à créer (au minimum égal nombre de part pour reconstruire le secret) : \n");
 
                         nbrSharedKey = saisiIntConsole();
 
-                    }while (nbrKeyUtil >= nbrSharedKey);
+                    } while (nbrKeyUtil >= nbrSharedKey);
 
                     // // // création des parts de secret
                     secretBigI = fileUtile.getAesBigI();
 
                     shamirSecret = new ShamirSecret();
 
-                    ShamKey = shamirSecret.generateKeys( nbrSharedKey,nbrKeyUtil, numBits, secretBigI);
+                    ShamKey = shamirSecret.generateKeys(nbrSharedKey, nbrKeyUtil, numBits, secretBigI,userService);
                 }
-
+            }
+            if(newDirectory == 3)
+            {
                 // // //////////////////////////////révélation du secret //////////////////////////////////
+                int cpt =0;
+                ShamirSecret shamirSecret = new ShamirSecret();
+
                 /// demande du UserService
                 System.out.println("Saisir le nom du service de destination \n"
                         + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
@@ -174,40 +179,71 @@ public class MainOK {
                 userService = saisiStringConsole();
                 userService = new formatUserService().formatUserService(userService);
 
-                fileUtile = new TestFichier(stockCrypt.getPath(), userService);
+                fileUtile = new TestFichier(stockJson.getPath(), userService);
+                TestFichier fileUtileTestBigInt = new TestFichier(stockCrypt.getPath(), userService);
 
-                while(!fileUtile.validFile() && cpt<=3 )
+                while(!fileUtile.JsonFile() && cpt<=3 )
                 {
                     System.out.println("Erreur dans la saisie du nom du service de destination  \n" +
                             "Saisissez à nouveau le nom du service souhaité.\n"
                             + "(Ne pas mettre de caractère spéciaux en fin de ligne, SVP.\n");
 
                     userService = saisiStringConsole();
-                    fileUtile = new TestFichier(stockCrypt.getPath(), userService);
+                    fileUtile = new TestFichier(stockJson.getPath(), userService);
+                    fileUtileTestBigInt = new TestFichier(stockCrypt.getPath(), userService);
                     cpt++;
                 }
                 cpt = 0;
 
-				 //RESOLUTION SHAMIR, calculate parameter 0 (secret)
-                byte[] des = shamirSecret.calculateLagrange(ShamKey);
+                // restitution des donnéees stockées dans Json
+                File fileJ = fileUtile.takeJson();
 
+                // Extraction des données sauvegardées dans le fichier Json
+                Gson decryptGson = new GsonBuilder().create ();
+                ArrayList<ShamirKey> ShamKey  = null ;
+                Type ListType = new TypeToken<ArrayList<ShamirKey>>(){}.getType();
+
+                InputStream iStream = new FileInputStream(fileJ.getPath());
+                InputStreamReader irJ= new InputStreamReader(iStream);
+                BufferedReader buff=new BufferedReader(irJ);
+                ShamKey  = decryptGson.fromJson(buff, ListType /* ShamirKey [].class*/  );
+                buff.close();
+
+                // But didactique pour être sûr
+                // que les données récupérées soient les mêmes que celles sauvegardées
+/*                    for(int i=1; i< ShamKey.size(); i++)
+                    {
+                        System.out.println(i+"-> x" + i + " = " +ShamKey.get(i).getF());
+                        System.out.println(i+"-> f(x" + i + ") = " +ShamKey.get(i).getF());
+                        System.out.println("Prime "+ ShamKey.get(i).getP());
+                    }
+*/
+                // Conversion ArrayList en ShamirKey []
+                ShamirKey [] keys = new ShamirKey[ShamKey.size()];
+                for (int i=0; i< ShamKey.size(); i++)
+                {
+                    keys [i] = ShamKey.get(i);
+                }
+
+                //RESOLUTION SHAMIR, calculate parameter 0 (secret)
+                byte[] des = shamirSecret.calculateLagrange(keys);
                 BigInteger secretFound = new BigInteger(des);
 
-                String aesBI = secretFound.toString(32);
+                // vérification du BigInteger trouvé
+                if (fileUtile.JsonFile ()){
+                    if(fileUtile.getBigInt().startsWith("0"))
+                        secretFound = secretFound.negate();
+                }else {
+                    return;
+                }
 
-                if(fileUtile.getAesBigI().compareTo(BigInteger.ONE) < 0) {
-                    secretFound = secretFound.negate();
-                    aesBI = "0" + aesBI;
+                if(!fileUtileTestBigInt.validFile()) {
+                    if(fileUtileTestBigInt.getAesBigI() != secretFound)
+                        return;
                 }
 
                 /// reconstruction secret
                 decodSecret = new DecryptSecret();
-
-                if (!fileUtile.testFile (aesBI))
-                    return ;
-
-                userService= fileUtile.getUserService();
-                // l'inclure dans :
                 decodSecret.decrypt_sym(secretFound, userService);
 
                 newDirectory = 4;
@@ -215,7 +251,6 @@ public class MainOK {
             newDirectory = 4;
             return;
         }while(newDirectory != 1 && newDirectory != 2 && newDirectory != 3 );
-
 
     }
 
