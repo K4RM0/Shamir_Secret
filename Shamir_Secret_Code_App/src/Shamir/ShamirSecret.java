@@ -216,6 +216,9 @@ public class ShamirSecret {
 
             pathBI = "0" + secretBI.toString(32).substring(1);
         }
+        else
+            pathBI = secretBI.toString(32);
+
         jzTab = sauvGson.toJsonTree(keyArrayList).getAsJsonArray();
 
         OutputStreamWriter wr= new OutputStreamWriter(new FileOutputStream("Shamir_Secret_Code_App/JsonFile/" + pathBI + "_" + userService + ".json"));
