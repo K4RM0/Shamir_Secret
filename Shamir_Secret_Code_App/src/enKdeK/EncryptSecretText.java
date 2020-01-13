@@ -56,7 +56,7 @@ public class EncryptSecretText {
             byte[] buf_crypt = c.doFinal(entree.getBytes("UTF-8"));
             byte[] buf_cryptClear = c.doFinal(clearData);
 
-// permet d'afficher l'élément crypté en string pour être sur que le cryptage est réussi
+// permet d'afficher l'élément crypté en string pour être sûr que le cryptage est réussi
 //	      System.out.println( byteHexaToString (buf_crypt) );
 
             // sauvegarde secret text non crypté dans un fichier
@@ -74,7 +74,7 @@ public class EncryptSecretText {
             fos.close();
 
 
-            // sauvevfgarde secret text crypté dans un fichier
+            // sauvegarde secret text crypté dans un fichier
             /**
              * sauvegarde secret text non crypté dans un fichier dont le nom est crypté
              * Nom du fichier == chemin + userService
